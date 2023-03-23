@@ -8,13 +8,10 @@
 
 Women in Web3 is a not-for-profit organization dedicated to empowering and supporting women in the rapidly growing Web3 and blockchain technology space. They aim to create a strong community that fosters learning, collaboration, and growth by providing resources, networking opportunities, and mentorship. To effectively manage and share their wealth of knowledge, the organization requires a web-based CMS tailored to their specific needs.
 
- 
-
 #### Purpose of the CMS:
 
 The Women in Web3 organization requires a modern, user-friendly, and minimalist content management system (CMS) to manage and organize a variety of content, such as technical tutorials, web3 operational updates, job listings, success stories, and more. The CMS will serve as a centralized platform for managing the organization's online presence, streamlining content creation, and ensuring a consistent and engaging user experience for its audience.
 
- 
 
 #### User Roles:
 
