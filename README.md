@@ -17,9 +17,7 @@ The Women in Web3 organization requires a modern, user-friendly, and minimalist 
 
 - Administrator: Admin users have full control over the CMS, including the ability to manage users, manage content, and oversee site maintenance. They can create, edit, and delete content, as well as manage categories and tags.
 
-- Authors: Authors are verified content creators who can submit articles, tutorials, and other content to be published on the platform. They can CRUD their content. By clicking on their personal avatar, they will have an optimized personal page to share.
-
-- Registered Users: Registered users can browse and search for content and interact with authors and other users through comments, upvotes/downvotes, and social sharing options.
+- Registered Users: Registered users can browse and search for content, submit articles, tutorials, and other content to be published on the platform, and interact with other users through comments, upvotes/downvotes, and social sharing options. They can also CRUD their own content. By clicking on their personal avatar, they will have an optimized personal page to share.
 
 - Visitors: Unregistered visitors can view and search content on the platform, but they cannot interact with other users or submit content. To unlock additional features, they must register for an account.
 

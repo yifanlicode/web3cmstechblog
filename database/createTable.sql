@@ -21,6 +21,7 @@ updated_at datetime NOT NULL
 CREATE TABLE Articles (
 id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 title varchar(255) NOT NULL,
+cover_image varchar(255) NOT NULL,
 content text NOT NULL,
 user_id int(11) NOT NULL,
 FOREIGN KEY (user_id) REFERENCES Users(id),
@@ -59,9 +60,12 @@ updated_at datetime NOT NULL
 CREATE TABLE Tags (
   id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name varchar(255) NOT NULL,
+  article_id int(11) NOT NULL,
+  FOREIGN KEY (article_id) REFERENCES Articles(id),
   created_at datetime NOT NULL,
   updated_at datetime NOT NULL
 );
+
 
 CREATE TABLE ArticleTags (
   id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -70,5 +74,6 @@ CREATE TABLE ArticleTags (
   tag_id int(11) NOT NULL,
   FOREIGN KEY (tag_id) REFERENCES Tags(id),
   created_at datetime NOT NULL,
-  updated_at datetime NOT NULL
+  updated_at datetime NOT NULL,
+  UNIQUE KEY (article_id, tag_id)
 );
