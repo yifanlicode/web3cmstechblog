@@ -40,40 +40,7 @@ $blogs = $statement->fetchAll();
 
 <body>
   <!-- Header -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Women in Web3</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Explore</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Learn</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Build</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Jobs</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="create.php">New Blog</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <?php include 'header.php'; ?>
   <!-- End of Header -->
 
 
@@ -113,21 +80,9 @@ $blogs = $statement->fetchAll();
               </div>
             <?php endforeach ?>
         </div>
-        <footer>
-          <div class="container">
-            <p class="text-center">Copyright &copy; Women in Web3 Blog 2023</p>
-            <ul class="list-inline text-center">
-              <li class="list-inline-item">
-                <a href="#">Privacy Policy</a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">Terms of Use</a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">Contact Us</a>
-              </li>
-            </ul>
-          </div>
-        </footer>
+      <!-- End of Blog Post -->
 
+      <!-- Footer -->
+      <?php include 'footer.php'; ?>
+      <!-- End of Footer -->
 </html>

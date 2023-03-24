@@ -118,27 +118,9 @@ if ($post) {
     <!-- End of Main Content -->
 
 
-
-
-
-
-
-
-    <footer>
-      <div class="container">
-        <p class="text-center">Copyright &copy; Women in Web3 Blog 2023</p>
-        <ul class="list-inline text-center">
-          <li class="list-inline-item">
-            <a href="#">Privacy Policy</a>
-          </li>
-          <li class="list-inline-item">
-            <a href="#">Terms of Use</a>
-          </li>
-          <li class="list-inline-item">
-            <a href="#">Contact Us</a>
-          </li>
-        </ul>
-      </div>
-    </footer>
+  
+      <!-- Footer -->
+      <?php include 'footer.php'; ?>
+      <!-- End of Footer -->
 
 </html>
