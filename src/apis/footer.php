@@ -1,3 +1,9 @@
+<!-- 
+  This is the footer for the blog 
+  It is included in all pages 
+-->
+
+
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +14,7 @@
   <title>Women in Web3 Blog</title>
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../public/css/style.css">
 </head>
 
 
@@ -28,7 +34,7 @@
       </li>
     </ul>
   </div>
-</footer>
+</footer> 
 <!-- End of footer -->
 
 

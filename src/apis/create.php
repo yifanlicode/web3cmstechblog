@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($title) || empty($content)) {
     $error = "All fields are required";
   } else {
-         // Insert the post into the database  
+    // Insert the post into the database  
     $query = "INSERT INTO Articles (title, content, cover_image, category_id, user_id, created_at, updated_at)
     VALUES (:title, :content, '', :category_id, 1, NOW(), NOW())";
 
@@ -71,7 +71,6 @@ header("Location: index.php");
 
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,7 +78,7 @@ header("Location: index.php");
   <title>Women in Web3 Blog</title>
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../public/css/style.css">
 </head>
 
 <body>

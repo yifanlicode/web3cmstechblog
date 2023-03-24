@@ -52,7 +52,7 @@ if ($post) {
   <title>WWB <?= $post['title'] ?> </title>
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../public/css/style.css">
 </head>
 
 <body>
@@ -94,33 +94,31 @@ if ($post) {
   <!-- End of Header -->
 
   <!-- Main Content -->
-    <div class="container my-5">
-      <h1><?= $postTitle ?></h1>
-      <p>Category:
-        <?php
-        // Get the category name
-        $query = "SELECT name FROM Categories WHERE id = :id";
-        $statement = $db->prepare($query);
-        $statement->bindValue(':id', $post['category_id']);
-        $statement->execute();
-        $category = $statement->fetch();
-        echo $category['name'];
-        ?>
-      </p>
-      <p>Created at: <?= $postCreateTime ?></p>
-      <p>Updated at: <?= $postUpdateTime ?></p>
-      <p><?= $postContent ?></p>
+  <div class="container my-5">
+    <h1><?= $postTitle ?></h1>
+    <p>Category:
+      <?php
+      // Get the category name
+      $query = "SELECT name FROM Categories WHERE id = :id";
+      $statement = $db->prepare($query);
+      $statement->bindValue(':id', $post['category_id']);
+      $statement->execute();
+      $category = $statement->fetch();
+      echo $category['name'];
+      ?>
+    </p>
+    <p>Created at: <?= $postCreateTime ?></p>
+    <p>Updated at: <?= $postUpdateTime ?></p>
+    <p><?= $postContent ?></p>
 
-      <p>
-        <small><a href="edit.php?id=<?= $id; ?>">Edit</a></small>
-      </p>
-    </div>
-    <!-- End of Main Content -->
+    <p>
+      <small><a href="edit.php?id=<?= $post_id; ?>">Edit</a></small>
+    </p>
+  </div>
+  <!-- End of Main Content -->
 
-
-  
-      <!-- Footer -->
-      <?php include 'footer.php'; ?>
-      <!-- End of Footer -->
+  <!-- Footer -->
+  <?php include 'footer.php'; ?>
+  <!-- End of Footer -->
 
 </html>

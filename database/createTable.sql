@@ -74,6 +74,5 @@ CREATE TABLE ArticleTags (
   tag_id int(11) NOT NULL,
   FOREIGN KEY (tag_id) REFERENCES Tags(id),
   created_at datetime NOT NULL,
-  updated_at datetime NOT NULL,
-  UNIQUE KEY (article_id, tag_id)
+  updated_at datetime NOT NULL
 );

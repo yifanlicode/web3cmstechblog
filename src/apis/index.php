@@ -35,7 +35,7 @@ $blogs = $statement->fetchAll();
   <title>Women in Web3 Blog</title>
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../public/css/style.css">
 </head>
 
 <body>
@@ -72,7 +72,7 @@ $blogs = $statement->fetchAll();
                     $truncated_content = substr($content, 0, 200) . "...";
                   ?>
                     <p><?= $truncated_content ?></p>
-                    <a href="view.php?id=<?= htmlspecialchars($blog['id']); ?>">Read Full Post</a>
+                    <a href="view.php?id=<?= htmlspecialchars($blog['id']); ?>">Read Full Blog</a>
                   <?php else : ?>
                     <p><?= $content ?></p>
                   <?php endif ?>
