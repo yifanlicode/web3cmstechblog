@@ -1,16 +1,18 @@
 
 
-## CMS Project Proposal for Women in Web3
+## Web3 LaunchPad Website Proposal
 
-####  Business Name:  Women in Web3 Tech Blog
+
+####  Business Name:  Web3 LaunchPad 
 
 #### Description:
 
-Women in Web3 is a not-for-profit organization dedicated to empowering and supporting women in the rapidly growing Web3 and blockchain technology space. They aim to create a strong community that fosters learning, collaboration, and growth by providing resources, networking opportunities, and mentorship. To effectively manage and share their wealth of knowledge, the organization requires a web-based CMS tailored to their specific needs.
+Web3 LaunchPad is a one-stop destination for anyone looking to learn and work in the Web3 and blockchain industry. Our platform provides curated resources, projects, and job opportunities to help you launch your career in this rapidly growing field.
+
 
 #### Purpose of the CMS:
 
-The Women in Web3 organization requires a modern, user-friendly, and minimalist content management system (CMS) to manage and organize a variety of content, such as technical tutorials, web3 operational updates, job listings, success stories, and more. The CMS will serve as a centralized platform for managing the organization's online presence, streamlining content creation, and ensuring a consistent and engaging user experience for its audience.
+Web3 LaunchPad's CMS serves as a centralized platform for managing and sharing content related to Web3 and blockchain technology. It is designed to streamline content creation and ensure a consistent and engaging user experience for our audience. The CMS is tailored to the specific needs of our users, providing features such as a user-friendly interface, a variety of content types, user roles, and a database structure that makes it easy to manage content and track user engagement. The purpose of the CMS is to empower users to share their knowledge, connect with others in the community, and pursue opportunities in the Web3 industry.
 
 
 #### User Roles:
@@ -21,72 +23,49 @@ The Women in Web3 organization requires a modern, user-friendly, and minimalist 
 
 - Visitors: Unregistered visitors can view and search content on the platform, but they cannot interact with other users or submit content. To unlock additional features, they must register for an account.
 
- 
+
 
 #### Database Structure Description
 
-The proposed database structure for the Women in Web3 CMS will consist of the following tables:
-![](https://ibb.co/rdmv7Vx)
-
 **1.Users**
 
-\-    id (int, primary key, auto_increment): Unique identifier for each user.
+- id (int, primary key, auto_increment): Unique identifier for each user.
+- username (varchar, 255): The username of the user.
+- email (varchar, 255): The email address of the user.
+- password (varchar, 255): The hashed password of the user.
+- role (varchar, 255): The role of the user (either 'registered' or 'author').
+- created_at (datetime): The timestamp when the user was created.
+- updated_at (datetime): The timestamp when the user was last updated.
+- liked_articles (text): A comma-separated list of article IDs that the user has liked.
 
-\-    username (varchar, 255): The username of the user.
+**2.Articles**
 
-\-    email (varchar, 255): The email address of the user.
-
-\-    password (varchar, 255): The hashed password of the user.
-
-\-    role (varchar, 255): The role of the user (either 'registered' or 'author').
-
-\-    created_at (datetime): The timestamp when the user was created.
-
-\-    updated_at (datetime): The timestamp when the user was last updated.
-
-**2. Articles**
-
-\-    id (int, primary key, auto_increment): Unique identifier for each article.
-
-\-    title (varchar, 255): The title of the article.
-
-\-    content (text): The content of the article.
-
-\-    user_id (int, foreign key): The user who created the article.
-
-\-    category_id (int, foreign key): The category the article belongs to.
-
-\-    upvotes (int): The number of upvotes the article has received.
-
-\-    created_at (datetime): The timestamp when the article was created.
-
-\-    updated_at (datetime): The timestamp when the article was last updated.
+- id (int, primary key, auto_increment): Unique identifier for each article.
+- title (varchar, 255): The title of the article.
+- content (text): The content of the article.
+- tags (varchar, 255): A comma-separated list of tags associated with the article.
+- user_id (int, foreign key): The user who created the article.
+- category_id (int, foreign key): The category the article belongs to.
+- likes (int): The number of upvotes the article has received.
+- created_at (datetime): The timestamp when the article was created.
+- updated_at (datetime): The timestamp when the article was last updated.
 
 **3. Categories**
 
-\-    id (int, primary key, auto_increment): Unique identifier for each category.
-
-\-    name (varchar, 255): The name of the category.
-
-\-    description (varchar, 255): A brief description of the category.
-
-\-    created_at (datetime): The timestamp when the category was created.
-
-\-    updated_at (datetime): The timestamp when the category was last updated.
+- id (int, primary key, auto_increment): Unique identifier for each category.
+- name (varchar, 255): The name of the category.
+- description (varchar, 255): A brief description of the category.
+- created_at (datetime): The timestamp when the category was created.
+- updated_at (datetime): The timestamp when the category was last updated.
 
  **4.Comments**
 
-\-    id (int, primary key, auto_increment): Unique identifier for each comment.
-
-\-    content (text): The content of the comment.
-
-\-    user_id (int, foreign key): The user who posted the comment.
-
-\-    article_id (int, foreign key): The article the comment is related to.
-
-\-    created_at (datetime): The timestamp when the comment was created.
-
-\-    updated_at (datetime): The timestamp when the comment was last updated.
+- id (int, primary key, auto_increment): Unique identifier for each comment.
+- content (text): The content of the comment.
+- user_id (int, foreign key): The user who posted the comment.
+- article_id (int, foreign key): The article the comment is related to.
+- created_at (datetime): The timestamp when the comment was created.
+- updated_at (datetime): The timestamp when the comment was last updated.
 
 **During the actual development process, the content may be subject to minor adjustments, with the specific requirements taking priority.*
 
