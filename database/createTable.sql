@@ -18,7 +18,8 @@ CREATE TABLE Articles (
   category_id INTEGER REFERENCES Categories(id),
   likes INTEGER DEFAULT 0,
   created_at TIMESTAMP DEFAULT now(),
-  updated_at TIMESTAMP DEFAULT now()
+  updated_at TIMESTAMP DEFAULT now(),
+  cover_image VARCHAR(255) DEFAULT 'default.jpg' 
 );
 
 CREATE TABLE Categories (
