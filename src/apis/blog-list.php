@@ -1,8 +1,6 @@
 <?php
 
-
 // blog-list.php
-
 // Get the 10 most recent posts
 $query = "SELECT a.*, u.username as author, c.name as category_name 
           FROM Articles a
@@ -17,8 +15,6 @@ $statement->execute();
 $blogs = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
-
-
 
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">

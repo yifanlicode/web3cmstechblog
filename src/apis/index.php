@@ -17,7 +17,11 @@ require(__DIR__ . '/connect.php');
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Web3 Launchpad</title>
   <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-lcNNHT73ZFX53eShLrTfU8q6UEsri6CQj6tgmbY+9XhXx39JKTBBfLNYHl09E0hW" crossorigin="anonymous" />
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"> -->
+  
+  <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+  <link rel="stylesheet/scss" href="../../public/css/_bootswatch.scss">
+
   <link rel="stylesheet" href="../../public/css/style.css">
 </head>
 
@@ -41,6 +45,6 @@ require(__DIR__ . '/connect.php');
 
   <!-- JS Scripts -->
   <!-- JavaScript Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-i/wG9XJlKZ+lrV7nEJf5cQ8jw5y5lBdYJMSmqWj9XshvZuznjqQaS/y+ImWryM8n" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../public/css/bootstrap.min.css" integrity="sha384-Ed2grpAAfUgVfDfBVHPj9+15Ek329o8swXCSgTxHkzubDidTNJ3lk2bXJHr3Tfz9" crossorigin="anonymous">
 </body>
 </html>
