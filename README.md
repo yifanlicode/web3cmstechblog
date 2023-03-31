@@ -1,5 +1,3 @@
-
-
 ## Web3 LaunchPad Website Proposal
 
 
@@ -71,4 +69,3 @@ Web3 LaunchPad's CMS serves as a centralized platform for managing and sharing c
 
  
 
-I'm truly passionate about this project. I am committed to creating a CMS that not only meets the organization's needs but also delivers a seamless, engaging, and valuable experience for all users.
