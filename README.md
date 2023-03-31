@@ -1,19 +1,19 @@
 ## Web3 LaunchPad Website Proposal
 
 
-####  Business Name:  Web3 LaunchPad 
+###  Business Name:  Web3 LaunchPad 
 
-#### Description:
+### Description:
 
 Web3 LaunchPad is a one-stop destination for anyone looking to learn and work in the Web3 and blockchain industry. Our platform provides curated resources, projects, and job opportunities to help you launch your career in this rapidly growing field.
 
 
-#### Purpose of the CMS:
+### Purpose of the CMS:
 
 Web3 LaunchPad's CMS serves as a centralized platform for managing and sharing content related to Web3 and blockchain technology. It is designed to streamline content creation and ensure a consistent and engaging user experience for our audience. The CMS is tailored to the specific needs of our users, providing features such as a user-friendly interface, a variety of content types, user roles, and a database structure that makes it easy to manage content and track user engagement. The purpose of the CMS is to empower users to share their knowledge, connect with others in the community, and pursue opportunities in the Web3 industry.
 
 
-#### User Roles:
+### User Roles:
 
 - Administrator: Admin users have full control over the CMS, including the ability to manage users, manage content, and oversee site maintenance. They can create, edit, and delete content, as well as manage categories and tags.
 
@@ -23,49 +23,68 @@ Web3 LaunchPad's CMS serves as a centralized platform for managing and sharing c
 
 
 
-#### Database Structure Description
+### Database Structure Description
 
-**1.Users**
 
-- id (int, primary key, auto_increment): Unique identifier for each user.
-- username (varchar, 255): The username of the user.
-- email (varchar, 255): The email address of the user.
-- password (varchar, 255): The hashed password of the user.
-- role (varchar, 255): The role of the user (either 'registered' or 'author').
-- created_at (datetime): The timestamp when the user was created.
-- updated_at (datetime): The timestamp when the user was last updated.
-- liked_articles (text): A comma-separated list of article IDs that the user has liked.
+#### Categories Table
 
-**2.Articles**
+| Field       | Type        | Extra          |
+|-------------|-------------|----------------|
+| cat_id      | int(3)      | AUTO_INCREMENT |
+| cat_title   | varchar(255)| NOT NULL       |
 
-- id (int, primary key, auto_increment): Unique identifier for each article.
-- title (varchar, 255): The title of the article.
-- content (text): The content of the article.
-- tags (varchar, 255): A comma-separated list of tags associated with the article.
-- user_id (int, foreign key): The user who created the article.
-- category_id (int, foreign key): The category the article belongs to.
-- likes (int): The number of upvotes the article has received.
-- created_at (datetime): The timestamp when the article was created.
-- updated_at (datetime): The timestamp when the article was last updated.
+#### Comments Table
 
-**3. Categories**
+| Field          | Type        | Extra          |
+|----------------|-------------|----------------|
+| comment_id     | int(3)      | AUTO_INCREMENT |
+| comment_post_id| int(3)      | NOT NULL       |
+| comment_user_id| int(3)      | NOT NULL       |
+| comment_content| text        | NOT NULL       |
+| comment_status | varchar(255)| NOT NULL       |
+| comment_date   | datetime    | NOT NULL       |
 
-- id (int, primary key, auto_increment): Unique identifier for each category.
-- name (varchar, 255): The name of the category.
-- description (varchar, 255): A brief description of the category.
-- created_at (datetime): The timestamp when the category was created.
-- updated_at (datetime): The timestamp when the category was last updated.
+#### Posts Table
 
- **4.Comments**
+| Field            | Type        | Extra          |
+|------------------|-------------|----------------|
+| post_id          | int(3)      | AUTO_INCREMENT |
+| post_category_id | int(3)      | NOT NULL       |
+| post_title       | varchar(255)| NOT NULL       |
+| post_author      | varchar(255)| NOT NULL       |
+| post_user        | varchar(255)| NOT NULL       |
+| post_date        | datetime    | NOT NULL       |
+| update_date      | TIMESTAMP   | NOT NULL       |
+| post_image       | LONGTEXT    | NOT NULL       |
+| post_content     | text        | NOT NULL       |
+| post_tags        | varchar(255)| NOT NULL       |
+| post_comment_count|int(11)     | NOT NULL       |
+| post_status      | varchar(255)| NOT NULL       |
+| post_views_count | int(11)     | NOT NULL       |
 
-- id (int, primary key, auto_increment): Unique identifier for each comment.
-- content (text): The content of the comment.
-- user_id (int, foreign key): The user who posted the comment.
-- article_id (int, foreign key): The article the comment is related to.
-- created_at (datetime): The timestamp when the comment was created.
-- updated_at (datetime): The timestamp when the comment was last updated.
+#### Users Table
 
-**During the actual development process, the content may be subject to minor adjustments, with the specific requirements taking priority.*
+| Field          | Type        | Extra          |
+|----------------|-------------|----------------|
+| user_id        | int(3)      | AUTO_INCREMENT |
+| username       | varchar(255)| NOT NULL       |
+| user_email     | varchar(255)| NOT NULL       |
+| user_password  | varchar(255)| NOT NULL       |
+| user_role      | varchar(255)| NOT NULL       |
+| user_firstname | varchar(255)| NOT NULL       |
+| user_lastname  | varchar(255)| NOT NULL       |
+| user_image     | text        | NOT NULL       |
+| randSalt       | varchar(255)| NOT NULL       |
+| token          | text        | NOT NULL       |
+| created_at     | timestamp   | NOT NULL       |
 
- 
+#### Users_online Table
 
+| Field       | Type         | Extra          |
+|-------------|--------------|----------------|
+| id          | int(11)      | AUTO_INCREMENT |
+| session     | varchar(255) | NOT NULL       |
+| time        | int(11)      | NOT NULL       |
+| user_id     | int(11)      | DEFAULT NULL   |
+| ip_address  | varchar(255) | NOT NULL DEFAULT '' |
+| user_agent  | text         | NOT NULL       |
