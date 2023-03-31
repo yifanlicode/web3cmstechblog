@@ -29,16 +29,10 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="index.php" role="button" aria-haspopup="true" aria-expanded="false">Tech Blog</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Blockchain</a>
-            <a class="dropdown-item" href="#">DeFi</a>
-            <a class="dropdown-item" href="#">NFTs</a>
-            <a class="dropdown-item" href="#">DAOs</a>
-            <!-- <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a> -->
+            <a class="dropdown-item" href="#">Courses</a>
+            <a class="dropdown-item" href="#">Tutorials</a>
+            <a class="dropdown-item" href="#">TechBlogs</a>
           </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Github</a>
         </li>
       </ul>
       <form class="d-flex">

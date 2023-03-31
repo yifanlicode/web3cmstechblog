@@ -12,7 +12,6 @@
 require('connect.php');
 
 // Get the sort value from the GET parameter
-$sort = isset($_GET['sort']) ? $_GET['sort'] : '';
 
 // Generate the SQL query based on the sort value
 //sort by post_date

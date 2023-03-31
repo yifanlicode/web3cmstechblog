@@ -73,6 +73,13 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
         </div>
         <!-- Include tags-cloud.php -->
 
+        <!-- Categories -->
+        <div>
+          <h5>Categories</h5>
+        </div>
+        <!-- Include categories.php -->
+        
+
           <!-- Popular articles -->
           <div>
           <h5> Popular Articles</h5>

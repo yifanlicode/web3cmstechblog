@@ -84,9 +84,10 @@ if ($post) {
       <?php include 'single-blog.php'; ?>
     </div>
 
-
-    <div class="col-lg-3">
+    
       <!-- Sidebar -->
+
+      <div class="col-lg-2">
       <div class="sidebar">
       
         <!-- Tags cloud -->
@@ -94,6 +95,13 @@ if ($post) {
           <h5>Tags Cloud</h5>
         </div>
         <!-- Include tags-cloud.php -->
+
+        <!-- Categories -->
+        <div>
+          <h5>Categories</h5>
+        </div>
+        <!-- Include categories.php -->
+
 
           <!-- Popular articles -->
           <div>
@@ -103,6 +111,8 @@ if ($post) {
 
       </div>
     </div>
+
+    
   </div>
 </div>
 <!-- End of Main Content -->
