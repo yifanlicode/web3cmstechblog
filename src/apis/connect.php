@@ -1,9 +1,21 @@
 <?php
 
 //Define database credentials
-const DB_HOST = 'mysql:host=localhost;dbname=web3techblog_db;charset=utf8';
-const DB_USER = 'yifan';
-const DB_PASS = 'admin';
+// const DB_HOST = 'mysql:host=localhost;dbname=web3techblog_db;charset=utf8';
+// const DB_USER = 'yifan';
+// const DB_PASS = 'admin';
+
+if (!defined('DB_HOST')) {
+  define('DB_HOST', 'mysql:host=localhost;dbname=web3techblog_db;charset=utf8');
+}
+
+if (!defined('DB_USER')) {
+  define('DB_USER', 'yifan');
+}
+
+if (!defined('DB_PASS')) {
+  define('DB_PASS', 'admin');
+}
 
 
 //  PDO is PHP Data Objects
@@ -22,3 +34,5 @@ try {
 
 
 ?>
+
+
