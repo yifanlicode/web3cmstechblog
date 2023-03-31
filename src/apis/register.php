@@ -118,6 +118,8 @@ function register_user($username, $email, $password) {
   $email = trim($email);
   $password = trim($password);
 
+  
+  // Hash password
   $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
   $stmt = $db->prepare("INSERT INTO users (username, user_email, user_password) VALUES (:username, :email, :password)");
@@ -125,6 +127,10 @@ function register_user($username, $email, $password) {
   $stmt->bindParam(':email', $email);
   $stmt->bindParam(':password', $password);
   $stmt->execute();
+
+  // Redirect to login page after successful registration
+  header("Location: login.php");
+  exit();
 }
 
 
@@ -135,8 +141,6 @@ function redirect($url) {
 
   
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -164,6 +168,7 @@ function redirect($url) {
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <h1 class="text-center mb-4">Register</h1>
+                
                 <form id="register-form" action="register.php" method="post" autocomplete="off">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>

@@ -7,9 +7,8 @@
 <?php
 
 // blog-list.php
-
-
 require('connect.php');
+$sort = isset($_GET['sort']) ? $_GET['sort'] : '';
 
 // Get the sort value from the GET parameter
 
@@ -43,8 +42,6 @@ $statement->execute();
 $blogs = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
-
-
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
   <?php foreach ($blogs as $blog) : ?>

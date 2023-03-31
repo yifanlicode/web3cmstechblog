@@ -105,6 +105,10 @@ if ($post) {
     </div>
     <!-- End of sidebar -->
 
+    <!-- comments -->
+    <!-- Include comments.php -->
+    <?php include 'comments.php'; ?>
+
     
   </div>
 </div>

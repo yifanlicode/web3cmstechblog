@@ -10,6 +10,8 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
 
 ?>
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,8 +30,8 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-ai3DlHwZ5K5W5GTHYYXcBbXEikRyvCtWXBx8Hg+PpDEYw+ZRMHnZa8nXQ2viM59JScfzsFbSVn71MZ0kgQGbQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-
 <body>
+
   <!-- Header -->
   <?php include(__DIR__ . '/header.php'); ?>
   <!-- End of Header -->
@@ -56,33 +58,35 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
         <option value="update_date" <?php if ($sort == 'update_date') echo 'selected' ?>>Update Date</option>
       </select>
     </div>
+
+
   <!-- Include blog-list.php -->
   <div id="blog-list-container">
         <?php include 'blog-list.php'; ?>
       </div>
     </div>
 
-    <!-- Sidebar -->
-    <div class="col-lg-3">
-      <div class="sidebar">
-      
-        <!-- Tags cloud -->
-        <!-- Include tags-cloud.php -->
-        <?php include 'tags-cloud.php'; ?>
-
-        <!-- Categories -->
-        <!-- Include categories.php -->
-        <?php include 'categories.php'; ?>
-        
-
-        <!-- Popular articles -->
-        <!-- Include popular-posts.php -->
-        <?php include 'popular-posts.php'; ?>
-
-      </div>
-    </div>
-    <!-- End of sidebar -->
+  <!-- Sidebar -->
+  <div class="col-lg-3">
+    <div class="sidebar">
     
+      <!-- Tags cloud -->
+      <!-- Include tags-cloud.php -->
+      <?php include 'tags-cloud.php'; ?>
+
+      <!-- Categories -->
+      <!-- Include categories.php -->
+      <?php include 'categories.php'; ?>
+      
+
+      <!-- Popular articles -->
+      <!-- Include popular-posts.php -->
+      <?php include 'popular-posts.php'; ?>
+
+    </div>
+  </div>
+  <!-- End of sidebar -->
+
   </div>
 </div>
 <!-- End of Main Content -->
