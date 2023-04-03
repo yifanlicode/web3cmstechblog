@@ -41,7 +41,7 @@ CREATE TABLE `posts` (
   `post_title` varchar(255) NOT NULL DEFAULT '',
   `post_author` varchar(255) NOT NULL DEFAULT '',
   `post_user` varchar(255) NOT NULL DEFAULT '',
-  `post_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `post_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_date` TIMESTAMP NOT NULLDDEFAULT CURRENT_TIMESTAMP,
   `post_image` LONGTEXT NOT NULL,
   `post_content` text NOT NULL,
