@@ -41,7 +41,6 @@ if ($post) {
 } else {
   header("Location: index.php");
   exit;
-
 }
 
 ?>

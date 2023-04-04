@@ -39,9 +39,12 @@
           <p class="fs-6 fw-bold text-muted mb-0">
             Posted on <span class="text-primary"><?= $postDate ?></span>
           </p>
-
         </header>
         <hr>
+        
+        <!-- Article Image -->
+        <img src="<?= $postImage ?>" alt="Post Image">
+
         <!-- Article Content -->
         <p class="fs-5"><?= $postContent ?></p>
       </article>
