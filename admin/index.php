@@ -1,4 +1,4 @@
-<?php include "includes/admin_header.php";?>
+<?php include "includes/admin_includes/header.php";?>
     <div id="wrapper">
 
 
@@ -285,7 +285,7 @@ $subscriber_count = mysqli_num_rows($select_all_subscribers);
     
         <!-- /#page-wrapper -->
         
-    <?php include "includes/admin_footer.php" ?>
+    <?php include "includes/admin_includes/footer.php" ?>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>

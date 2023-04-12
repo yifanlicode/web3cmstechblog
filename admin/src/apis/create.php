@@ -85,7 +85,7 @@ header("Location: index.php");
 
 <body>
     <!-- Header -->
-    <?php include 'header.php'; ?>
+    <?php include 'includes/header.php'; ?>
     <!-- End of Header -->
   <!-- Main Content -->
   `<div class="container my-5">
@@ -128,7 +128,7 @@ header("Location: index.php");
 
  
       <!-- Footer -->
-      <?php include 'footer.php'; ?>
+      <?php include 'includes/footer.php'; ?>
       <!-- End of Footer -->
 
 </html>

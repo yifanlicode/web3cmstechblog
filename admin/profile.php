@@ -1,4 +1,4 @@
-<?php include "includes/admin_header.php" ?>
+<?php include "includes/admin_includes/header.php" ?>
 <?php
 
    if(isset($_SESSION['username'])) {
@@ -217,4 +217,4 @@ if(isset($_POST['edit_user'])) {
      
         <!-- /#page-wrapper -->
         
-    <?php include "includes/admin_footer.php" ?>
+    <?php include "includes/admin_includes/footer.php" ?>

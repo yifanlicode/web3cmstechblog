@@ -30,7 +30,7 @@ require(__DIR__ . '/connect.php');
 
 <body>
   <!-- Header -->
-  <?php include(__DIR__ . '/header.php'); ?>
+  <?php include(__DIR__ . '/includes/header.php'); ?>
   <!-- End of Header -->
 
  <!-- Main Content -->
@@ -63,7 +63,7 @@ require(__DIR__ . '/connect.php');
 
 
   <!-- Footer -->
-  <?php include 'footer.php'; ?>
+  <?php include 'includes/footer.php'; ?>
   <!-- End of Footer -->
 
   <!-- JS Scripts -->
