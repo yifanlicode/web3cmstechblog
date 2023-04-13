@@ -38,8 +38,6 @@
   </div>
 </footer>
 <!-- JS Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/@popperjs/core@2.10.2/dist/esm/popper.min.js"></script>
 
 <!-- Sort posts -->
 <script>
@@ -56,6 +54,10 @@
     xhr.send();
   }
 </script>
+
+<!-- <script src="../public/js/post.js"></script> -->
+
+
 
 </body>
 </html>

@@ -16,13 +16,19 @@
   <title>Web3 Launchpad</title>
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="../public/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../public/css/bootstrap.css">
   <link rel="stylesheet" href="../public/css/style.css">
-  <script src="../public/js/post.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-ai3DlHwZ5K5W5GTHYYXcBbXEikRyvCtWXBx8Hg+PpDEYw+ZRMHnZa8nXQ2viM59JScfzsFbSVn71MZ0kgQGbQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-9VxxfO+hNdeNtKDeMVtJN7cbrZIz1w7KdM/0g2sXs3oVRFFmJmwp0Kd1i7B1UEGATLV0ix0rTLPdhjT9XUK1Rg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="../public/js/validation.js"></script>
+   
+  </head>
+ 
 
 
 <body>
