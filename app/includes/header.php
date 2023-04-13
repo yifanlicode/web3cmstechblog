@@ -4,8 +4,8 @@
 -->
 
 <?php
-if(session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) {
+  session_start();
 }
 ?>
 
@@ -21,19 +21,26 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Web3 Launchpad</title>
-  
+
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="../public/css/bootstrap.min.css">
   <link rel="stylesheet" href="../public/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-  
+
   <!-- JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-9VxxfO+hNdeNtKDeMVtJN7cbrZIz1w7KdM/0g2sXs3oVRFFmJmwp0Kd1i7B1UEGATLV0ix0rTLPdhjT9XUK1Rg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+  <!-- jQuery2023 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <!-- jQuery Validation 2023 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
+
   <!-- Custom JavaScript -->
-  <script src="../public/js/validation.js"></script>
+  <script src=" ../public/js/validation.js"></script>
 </head>
 
 
@@ -76,31 +83,31 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
           <input class="form-control me-sm-2" type="search" placeholder="Search">
           <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
         </form>
-      <!-- login and logout -->
-      <ul class="navbar-nav">
-        <?php if (isset($_SESSION['user_id'])): ?>
+        <!-- login and logout -->
+        <ul class="navbar-nav">
+          <?php if (isset($_SESSION['user_id'])) : ?>
             <li class="nav-item">
-                <span class="nav-link">Welcome, <?php echo $_SESSION['username']; ?></span>
+              <span class="nav-link">Welcome, <?php echo $_SESSION['username']; ?></span>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="logout.php">Logout</a>
+              <a class="nav-link" href="logout.php">Logout</a>
             </li>
-        <?php else: ?>
+          <?php else : ?>
             <li class="nav-item">
-                <a class="nav-link" href="login.php">Login</a>
+              <a class="nav-link" href="login.php">Login</a>
             </li>
-        <?php endif; ?>
-      </ul>
+          <?php endif; ?>
+        </ul>
       </div>
     </div>
   </nav>
 
 
   <?php
-if (isset($_SESSION['message'])) {
+  if (isset($_SESSION['message'])) {
     echo '<div class="container mt-3"><div class="alert alert-success">' . $_SESSION['message'] . '</div></div>';
     unset($_SESSION['message']);
-}
-?>
+  }
+  ?>
 
   <!-- End of Header -->
