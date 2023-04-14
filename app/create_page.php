@@ -100,9 +100,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else {
     echo 'Error creating post';
   }
-  }
+}
 
-  // Get all categories
+// Get all categories
 $statement = $db->query('SELECT * FROM categories');
 $categories = $statement->fetchAll();
 $statement->closeCursor();
@@ -124,13 +124,10 @@ include('includes/header.php');
     </div>
 
 
-
     <!-- Category  -->
     <div class="form-group">
       <label for="category_id">Category</label>
       <select name="category_id" class="form-control" id="category">
-
-
         <?php foreach ($categories as $category) : ?>
           <option value="<?= $category['cat_id']; ?>"><?= $category['cat_title']; ?></option>
         <?php endforeach; ?>
@@ -138,14 +135,17 @@ include('includes/header.php');
       </select>
     </div>
 
-
     <!-- New Category use bootstrap5 -->
-
 
     <!-- Tags -->
     <div class="form-group">
       <label for="tag">Tags </label>
       <input type="text" name="tag" class="form-control" id="tag" placeholder="Enter Tags" required>
+    </div>
+
+    <div class="form-group">
+      <label for="author">Author:</label>
+      <input type="text" class="form-control" name="author" id="author" value="<?= $_SESSION['username']; ?>" disabled>
     </div>
 
 
@@ -168,19 +168,12 @@ include('includes/header.php');
       <!-- Content -->
       <div class="form-group">
         <label for="content">Content</label>
-        <textarea name="content" class="form-control" id="content" rows="10" required></textarea>
+        <div id="editor" style="height: 500px;"></div>
+        <textarea name="content" class="form-control" id="hidden-content" rows="10" style="display:none;"></textarea>
       </div>
 
-
-      <!-- author -->
-
-
-      <div class="form-group">
-        <label for="author" class="me-2">Author:</label>
-        <p class="d-inline"><?= $_SESSION['username']; ?></p>
-        <input type="hidden" name="author" value="<?= $_SESSION['username']; ?>">
-      </div>
-
+  
+      <!-- Submit -->
 
       <button type="submit" name="submit" class="btn btn-primary">Create Post</button>
   </form>
