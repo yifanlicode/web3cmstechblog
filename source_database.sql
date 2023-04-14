@@ -44,7 +44,7 @@ CREATE TABLE `posts` (
   `post_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_date` TIMESTAMP NOT NULLDDEFAULT CURRENT_TIMESTAMP,
   `post_image` LONGTEXT NOT NULL,
-  `post_content` text NOT NULL,
+  `post_content` LONGTEXT NOT NULL,
   `post_tags` varchar(255) NOT NULL DEFAULT '',
   `post_comment_count` int(11) NOT NULL DEFAULT '0',
   `post_status` varchar(255) NOT NULL DEFAULT 'draft',

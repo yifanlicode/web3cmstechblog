@@ -15,11 +15,11 @@ Web3 LaunchPad's CMS serves as a centralized platform for managing and sharing c
 
 ### User Roles:
 
-- Administrator: Admin users have full control over the CMS, including the ability to manage users, manage content, and oversee site maintenance. They can create, edit, and delete content, as well as manage categories and tags.
+- Administrator: Admin users have full control over the CMS, including the ability to manage users, manage content, and oversee site maintenance. They can create, edit, and delete content, as well as manage categories and tags.Comment moderation can take the form of deleting comments, hiding them from public view, or "disemvoweling" comments.Only admin users can moderate comments.- Admin users must have the ability to view all registered users, add users, update users, and delete users.
 
 - Registered Users: Registered users can browse and search for content, submit articles, tutorials, and other content to be published on the platform, and interact with other users through comments, upvotes/downvotes, and social sharing options. They can also CRUD their own content. By clicking on their personal avatar, they will have an optimized personal page to share.
 
-- Visitors: Unregistered visitors can view and search content on the platform, but they cannot interact with other users or submit content. To unlock additional features, they must register for an account.
+- Visitors: Unregistered visitors can view and search content on the platform.They can submit content, submit a name with their comment.To unlock additional features, they must register for an account.
 
 
 
