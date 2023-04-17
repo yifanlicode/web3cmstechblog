@@ -9,6 +9,7 @@
 require('includes/connect.php');
 
 // Get the post ID and validate it
+
 $post_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
 $query = "SELECT p.*, c.cat_title
@@ -105,7 +106,7 @@ include 'includes/header.php';
         <hr>
 
         <!-- Article Image -->
-        <img src="<?= $postImage ?>" alt="Post Image">
+        <img src="uploads/<?= $postImage ?>" alt="Post Image">
 
         <!-- Article Content -->
         <p class="fs-5"><?= $postContent ?></p>

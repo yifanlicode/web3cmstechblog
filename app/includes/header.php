@@ -1,12 +1,12 @@
 <!-- 
-  This is the header for the blog 
-  It is included in all pages 
+  header file for all pages
 -->
 
 <?php
 if (session_status() !== PHP_SESSION_ACTIVE) {
   session_start();
 }
+
 ?>
 
 
@@ -32,15 +32,22 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-9VxxfO+hNdeNtKDeMVtJN7cbrZIz1w7KdM/0g2sXs3oVRFFmJmwp0Kd1i7B1UEGATLV0ix0rTLPdhjT9XUK1Rg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+  <!-- Main Quill library -->
+  <!-- Include the Quill library --> 
+  <script src="//cdn.quilljs.com/1.0.0/quill.js"></script>
+  <script src="//cdn.quilljs.com/1.0.0/quill.min.js"></script>
+
+  <!-- Theme included stylesheets -->
+  <link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
+  <!-- <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.core.css"> -->
+
   <!-- jQuery2023 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
   <!-- jQuery Validation 2023 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-
-
   <!-- Custom JavaScript -->
   <script src=" ../public/js/validation.js"></script>
+
 </head>
 
 
@@ -60,29 +67,42 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
               <span class="visually-hidden">(current)</span>
             </a>
           </li>
+
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="blog-list.php">Blog List</a>
+          </li> -->
+
           <li class="nav-item">
-            <a class="nav-link" href="#">Explore</a>
+            <a class="nav-link" href="index.php">Tutorials</a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="blog-list.php">Learn</a>
+            <a class="nav-link" href="index.php">Hacthons</a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="#">Jobs</a>
+            <a class="nav-link" href="index.php">Jobs</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="index.php" role="button" aria-haspopup="true" aria-expanded="false">Tech Blog</a>
+
+          <li class="nav-item">
+            <a class="nav-link" href="create_page.php">PostBlog</a>
+          </li>
+
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="categories.php" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="#">Courses</a>
-              <a class="dropdown-item" href="#">Tutorials</a>
+              <a class="dropdown-item" href="#"></a>
               <a class="dropdown-item" href="#">TechBlogs</a>
             </div>
-          </li>
+          </li> -->
         </ul>
         <!-- search bar -->
         <form class="d-flex">
           <input class="form-control me-sm-2" type="search" placeholder="Search">
           <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
         </form>
+
         <!-- login and logout -->
         <ul class="navbar-nav">
           <?php if (isset($_SESSION['user_id'])) : ?>

@@ -1,4 +1,3 @@
-<!-- Footer -->
 <footer class="bg-light py-3">
   <div class="container">
     <div class="row">
@@ -9,7 +8,8 @@
         <h5 class="mb-3 text-center">Subscribe to Our Newsletter</h5>
         <form class="subscribe-form d-flex flex-row">
           <div class="form-group">
-            <input type="email" class="form-control me-2" placeholder="Enter your email address">
+            <label for="email" class="visually-hidden">Email address</label>
+            <input type="email" class="form-control me-2" id="email" placeholder="Enter your email address">
           </div>
           <button type="submit" class="btn btn-primary">Subscribe</button>
         </form>
@@ -19,25 +19,34 @@
         <ul class="list-unstyled d-flex justify-content-center">
           <li class="me-4">
             <a href="https://twitter.com/" target="_blank">
-            Twitter <i class="fab fa-twitter fa-2x"></i>
+            <i class="fab fa-twitter fa-2x"></i>
             </a>
           </li>
+
           <li class="me-4">
             <a href="https://github.com/" target="_blank">
-             Github <i class="fab fa-github fa-2x"></i>
+             <i class="fab fa-github fa-2x"></i>
             </a>
           </li>
+
           <li class="me-4">
             <a href="https://discord.com/" target="_blank">
-            Discord  <i class="fab fa-discord fa-2x"></i>
+            <i class="fab fa-discord fa-2x"></i>
             </a>
           </li>
+
+          <li class="me-4">
+            <a href="https://reddit.com/" target="_blank">
+            <i class="fab fa-reddit fa-2x"></i>
+            </a>
+          </li>
+
         </ul>
       </div>
     </div>
   </div>
 </footer>
-<!-- JS Scripts -->
+<!-- End of Footer -->
 
 <!-- Sort posts -->
 <script>
@@ -55,11 +64,8 @@
   }
 </script>
 
-<!-- <script src="../public/js/post.js"></script> -->
-
 
 
 </body>
 </html>
 
-<!-- End of Footer -->

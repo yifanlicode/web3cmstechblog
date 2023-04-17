@@ -13,7 +13,7 @@
 
         foreach ($categories as $category) :
         ?>
-          <a href="category.php?cat_id=<?= $category['cat_id'] ?>" class="list-group-item list-group-item-action"><?= $category['cat_title'] ?></a>
+          <a href="categories.php?cat_id=<?= $category['cat_id'] ?>" class="list-group-item list-group-item-action"><?= $category['cat_title'] ?></a>
         <?php endforeach; ?>
     </div>
   </div>
@@ -36,7 +36,7 @@
         $statement->closeCursor();
 
         foreach ($posts as $post) {
-          echo "<li><a href='single.php?id=" . $post['post_id'] . "'>" . $post['post_title'] . "</a></li>";
+          echo "<li><a href='full_page.php?id=" . $post['post_id'] . "'>" . $post['post_title'] . "</a></li>";
         }
         ?>
       </ul>

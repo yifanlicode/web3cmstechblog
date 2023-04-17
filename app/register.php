@@ -1,10 +1,9 @@
 <?php
 
-require_once 'connect.php';
+require_once 'includes/connect.php';
 
 // Check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
   $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
   $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
   $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
@@ -56,8 +55,6 @@ function register_user($username, $email, $password)
     return "error";
   }
 }
-
-
 
 include 'includes/header.php';
 ?>

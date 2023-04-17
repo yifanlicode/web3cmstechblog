@@ -14,6 +14,8 @@ if (isset($_SESSION['username'])) {
 }
 
 require('includes/connect.php');
+require('includes/ImageResize.php');
+require('includes/ImageResizeException.php');
 
 $post_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
@@ -42,9 +44,9 @@ if (isset($_POST['update_post'])) {
   $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
   $tags = filter_input(INPUT_POST, 'tags', FILTER_SANITIZE_STRING);
   $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_STRING);
-  $image = filter_input(INPUT_POST, 'image', FILTER_SANITIZE_STRING);
+  $page_image = filter_input(INPUT_POST, 'page_image', FILTER_SANITIZE_STRING);
 
-  
+
   // Check if delete image checkbox is checked
   $delete_image = isset($_POST['delete_image']);
 
@@ -64,21 +66,48 @@ if (isset($_POST['update_post'])) {
     $stmt->execute();
   }
 
-  // Handle image upload
-  if (!empty($_FILES['image']['tmp_name'])) {
+  // Check if a new image has been uploaded and delete the old image if it exists
+  if (isset($_FILES['page_image']) && $_FILES['page_image']['error'] == 0) {
+   
     //delete the old image
     $image_path = "uploads/" . $post['post_image'];
-    unlink($image_path);
+    if (file_exists($image_path)) {
+      unlink($image_path);
+    }
 
-    //upload the new image
-    $image_name = basename($_FILES['image']['name']);
-    $image_path = "uploads/$image_name";
-    move_uploaded_file($_FILES['image']['tmp_name'], $image_path);
+  // Upload and process the new image
+  $image = $_FILES['page_image'];
+
+    // Check if the uploaded file is an image
+    $mime_type = mime_content_type($image['tmp_name']);
+    if (in_array($mime_type, ['image/jpeg', 'image/png', 'image/gif'])) {
+
+// Resize and save the image
+$filename = uniqid('', true) . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
+$upload_path = 'uploads/' . $filename;
+$image_resize = new \Gumlet\ImageResize($image['tmp_name']);
+$image_resize->resizeToWidth(700);
+$image_resize->save($upload_path);
+
+    // Update the post image in the database
+    $query = "UPDATE posts SET post_image = :image WHERE post_id = :id";
+
+
+    $stmt = $db->prepare($query);
+    $stmt->bindValue(':image', $filename);
+    $stmt->bindValue(':id', $post_id, PDO::PARAM_INT);
+    $stmt->execute();
 
     $post_image = $image_name;
+
   } else {
-    $post_image = $post['post_image'];
+    $error = "The uploaded file is not a valid image. Please upload a JPEG, PNG or GIF image.";
   }
+}else {
+  // Handle the case where no new image is uploaded
+  $post_image = $post['post_image'];
+}
+
 
 
   //title and content ,category can not be empty
@@ -87,15 +116,15 @@ if (isset($_POST['update_post'])) {
   } else {
     // Update the post in the database
     $query = "
-    UPDATE posts 
-    SET post_title = :title, 
-    post_category_id = :category, 
-    post_content = :content, 
-    post_tags = :tags, 
-    post_status = :status,
-    post_author = :author,
-    post_image = :image
-    WHERE posts.post_id = :id";
+UPDATE posts 
+SET post_title = :title, 
+post_category_id = :category, 
+post_content = :content, 
+post_tags = :tags, 
+post_status = :status,
+post_author = :author
+WHERE posts.post_id = :id";
+
 
     $stmt = $db->prepare($query);
     $stmt->bindValue(':title', $title);
@@ -104,20 +133,16 @@ if (isset($_POST['update_post'])) {
     $stmt->bindValue(':tags', $tags);
     $stmt->bindValue(':status', $status);
     $stmt->bindValue(':author', $author);
-    $stmt->bindValue(':image', $post_image);
     $stmt->bindValue(':id', $post_id, PDO::PARAM_INT);
     $stmt->execute();
 
-
-    // Redirect to the edit page
-    header("Location: edit_page.php?id=$post_id");
+    // Redirect to the full blog page after updating the post
+    header("Location: full_page.php");
     exit;
   }
 }
 
-
 // Delete the post from the database
-
 if (isset($_POST['delete_post'])) {
 
   // Delete the image from the file system
@@ -131,8 +156,8 @@ if (isset($_POST['delete_post'])) {
   $stmt->execute();
   $stmt->closeCursor();
 
-  // Redirect to the index page
-  header("Location: index.php");
+  // Redirect to the full blog page after deleting the post the same blog page
+  header("Location: full_page.php");
   exit;
 }
 
@@ -143,7 +168,7 @@ include 'includes/header.php';   // Path: app/apis/includes/header.php
 <!-- Main Content -->
 <div class="container my-5">
   <h1>Edit Blog</h1>
-  <form action="edit_page.php?id=<?= $post_id ?>" method="post">
+  <form action="edit_page.php?id=<?= $post_id ?>" method="post" enctype="multipart/form-data">
     <!-- title -->
     <div class="form-group">
       <label for="title">Title:</label>
@@ -189,7 +214,7 @@ include 'includes/header.php';   // Path: app/apis/includes/header.php
     <!-- Image Upload-->
     <div class="form-group">
       <label for="image">Image:</label>
-      <input type="file" class="form-control-file" name="image" id="image" accept="image/*">
+      <input type="file" class="form-control-file" name="page_image" id="page_image">
     </div>
 
     <!-- Delete Image Checkbox -->

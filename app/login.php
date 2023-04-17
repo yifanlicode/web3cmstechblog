@@ -10,8 +10,13 @@ Logins are handled by way of an HTML form submitted to a PHP script.
 
 
 <?php
-session_start();
-require_once 'connect.php';
+
+if (session_status() !== PHP_SESSION_ACTIVE) {
+  session_start();
+}
+
+
+require_once 'includes/connect.php';
 
 
 $error = '';
@@ -34,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } else {
     $error = 'Please fill in all fields.';
   }
-
 }
 
 
@@ -67,7 +71,7 @@ function login_user($username, $password)
       }
       exit();
     } else {
-          return 'incorrect_password';
+      return 'incorrect_password';
     }
   } else {
     return 'invalid_username_email';
@@ -77,43 +81,47 @@ function login_user($username, $password)
 include 'includes/header.php';
 ?>
 
-
-
 <!-- Login  -->
 <div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <h1 class="text-center mb-4">Login</h1>
-            <form id="login-form" action="login.php" method="post" autocomplete="off">
-                <div class="mb-3">
-                <label for="username" class="form-label">Username or Email Address</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
 
-                <?php if (isset($_POST['username']) && $error): ?>
-                <div class="alert alert-danger" role="alert">
-                    <?php echo $error; ?>
-                </div>
-                <?php endif; ?>
-                
-                <button type="submit" class="btn btn-primary">Login</button>
+      <h1 class="text-center mb-4">Login</h1>
+      <?php if (isset($_SESSION['message'])) : ?>
+        <div class="alert alert-danger"><?php echo $_SESSION['message']; ?></div>
+        <?php unset($_SESSION['message']); ?>
+      <?php endif; ?>
 
-            </form>
-
-
+      <form id="login-form" action="login.php" method="post" autocomplete="off">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username or Email Address</label>
+          <input type="text" class="form-control" id="username" name="username" required>
         </div>
-    </div>
-
-    <!-- if user donot have a account, he can register one  -->
-    <div class="row justify-content-center mt-3">
-        <div class="col-md-8 col-lg-6">
-            <p class="text-center">Don't have an account? <a href="register.php">Register</a></p>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password" required>
         </div>
+
+        <?php if (isset($_POST['username']) && $error) : ?>
+          <div class="alert alert-danger" role="alert">
+            <?php echo $error; ?>
+          </div>
+        <?php endif; ?>
+
+
+        <button type="submit" class="btn btn-primary">Login</button>
+
+      </form>
+
+
     </div>
+  </div>
+
+  <!-- if user donot have a account, he can register one  -->
+  <div class="row justify-content-center mt-3">
+    <div class="col-md-8 col-lg-6">
+      <p class="text-center">Don't have an account? <a href="register.php">Register</a></p>
+    </div>
+  </div>
 </div>
 <?php include 'includes/footer.php'; ?>
-

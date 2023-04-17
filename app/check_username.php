@@ -1,5 +1,5 @@
 <?php
-require_once 'connect.php';
+require_once 'includes/connect.php';
 
 if (isset($_POST['username'])) {
   $username = $_POST['username'];

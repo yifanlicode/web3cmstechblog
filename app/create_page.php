@@ -1,5 +1,7 @@
 <?php
-// Path: app/create_page.php
+
+//path: app/create_page.php
+
 if (session_status() !== PHP_SESSION_ACTIVE) {
   session_start();
 }
@@ -11,24 +13,28 @@ if (!isset($_SESSION['user_id'])) {
   exit;
 }
 
-// Include the database connection  and GD library
 require('includes/connect.php');
 require('includes/ImageResize.php');
 require('includes/ImageResizeException.php');
+
+
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // POST DATE INTO DATABASE
   $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-  $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+   //can not get the content from the form why??
+  $content = $_POST['content'];
   $tag_names = isset($_POST['tag']) ? $_POST['tag'] : '';
   $category_id = isset($_POST['category_id']) ? $_POST['category_id'] : '';
   $image = isset($_FILES['page_image']) ? $_FILES['page_image'] : null;
   $post_status = isset($_POST['post_status']) ? $_POST['post_status'] : '';
   $author = $_SESSION['username'];
 
-  //category_id is 'new' if the user wants to add a new category
+
+  // Create a new category if the user entered a new category name in the form field 
   if ($category_id == 'new') {
     $category_name = filter_input(INPUT_POST, 'new_category', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -40,12 +46,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
 
-  //tag_names is an array of tag names
+  // Create a new tag if the user entered a new tag name in the form field
   $tag_names = array_map('trim', explode(',', $tag_names));
 
 
-  $query = "INSERT INTO posts(
+  // Print out the values for debugging 
+  echo "Content: " . $content . "<br>";
+  echo "Title: " . $title . "<br>";
+  echo "Category ID: " . $category_id . "<br>";
+  echo "Post Status: " . $post_status . "<br>";
 
+  // Insert the post into the database
+  $query = "INSERT INTO posts(
     post_category_id,
     post_title,
     post_author,
@@ -55,7 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     post_status,
     post_date
   ) VALUES (
-  
     :category_id,
     :title,
     :author,
@@ -65,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     :post_status, 
     NOW()
   )";
+
   $statement = $db->prepare($query);
   $statement->bindValue(':category_id', $category_id);
   $statement->bindValue(':title', $title);
@@ -75,30 +87,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $statement->bindValue(':post_status', $post_status);
 
 
-  // Upload image if it's set
-  if (!is_null($image)) {
-    $mime_type = mime_content_type($image['tmp_name']);
-
-    if (in_array($mime_type, ['image/jpeg', 'image/png', 'image/gif'])) {
-      $filename = uniqid('', true) . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
-      $upload_path = 'uploads/' . $filename;
-
-      try {
-        $image_resize = new \Gumlet\ImageResize($image['tmp_name']);
-        $image_resize->resizeToWidth(800);
-        $image_resize->save($upload_path);
-      } catch (\Gumlet\ImageResizeException $e) {
-        error_log($e->getMessage());
+  // Upload image
+    if (!is_null($image) && !empty($image['tmp_name'])) {
+      $mime_type = mime_content_type($image['tmp_name']);
+  
+  
+      if (in_array($mime_type, ['image/jpeg', 'image/png', 'image/gif'])) {
+        $filename = uniqid('', true) . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
+        $upload_path = 'uploads/' . $filename;
+  
+        try {
+          $image_resize = new \Gumlet\ImageResize($image['tmp_name']);
+          $image_resize->resizeToWidth(800);
+          $image_resize->save($upload_path);
+        } catch (\Gumlet\ImageResizeException $e) {
+          error_log($e->getMessage());
+        }
       }
-      $statement->bindValue(':image', $filename);
     }
-  }
+    if (!empty($filename)) {
+      $statement->bindValue(':image', $filename);
+    } else {
+      $statement->bindValue(':image', null, PDO::PARAM_NULL);
+    }
+  
 
   if ($statement->execute()) {
-    header('Location: full_page.php');
+    // header('Location: index.php'); 
     exit;
   } else {
-    echo 'Error creating post';
+    echo 'Error creating post'; 
   }
 }
 
@@ -112,42 +130,45 @@ include('includes/header.php');
 ?>
 
 
-
 <!-- Main Content -->
 <div class="container my-5">
   <h1 class="text-center">Create a New Blog Post</h1>
-  <form action="<?= $_SERVER["PHP_SELF"]; ?>" method="post" enctype="multipart/form-data">
+  <form action="create_page.php" method="post" enctype="multipart/form-data">
+
+
     <!-- Title -->
     <div class="form-group">
       <label for="title">Title</label>
       <input type="text" name="title" class="form-control" id="title" placeholder="Enter Title" required>
     </div>
 
-
     <!-- Category  -->
     <div class="form-group">
       <label for="category_id">Category</label>
-      <select name="category_id" class="form-control" id="category">
+      <select name="category_id" class="form-control" id="category" onchange="showNewCategoryField(this.value);">
         <?php foreach ($categories as $category) : ?>
           <option value="<?= $category['cat_id']; ?>"><?= $category['cat_title']; ?></option>
         <?php endforeach; ?>
-        <option value="new" data-bs-toggle="collapse">Add a new category</option>
+        <option value="new">Add a new category</option>
       </select>
     </div>
 
-    <!-- New Category use bootstrap5 -->
+    <div class="form-group collapse" id="new_category_div">
+      <label for="new_category">New Category Name</label>
+      <input type="text" name="new_category" class="form-control" id="new_category" placeholder="Enter New Category Name">
+    </div>
 
     <!-- Tags -->
     <div class="form-group">
       <label for="tag">Tags </label>
-      <input type="text" name="tag" class="form-control" id="tag" placeholder="Enter Tags" required>
+      <input type="text" name="tag" class="form-control" id="tag" placeholder="Enter Tags">
     </div>
 
+    <!-- Author -->
     <div class="form-group">
       <label for="author">Author:</label>
       <input type="text" class="form-control" name="author" id="author" value="<?= $_SESSION['username']; ?>" disabled>
     </div>
-
 
     <!-- Post_status -->
     <div class="form-group">
@@ -156,29 +177,44 @@ include('includes/header.php');
         <option value="draft">Draft</option>
         <option value="published">Published</option>
       </select>
+    </div>
 
 
-      <!-- Upload Image -->
-      <div class="form-group">
-        <label for="page_image">Cover Image</label>
-        <input type="file" name="page_image" class="form-control-file" id="page_image">
-      </div>
+    <!-- Upload Image -->
+    <div class="form-group">
+      <label for="page_image">Cover Image</label>
+      <input type="file" name="page_image" class="form-control-file" id="page_image">
+    </div>
 
 
       <!-- Content -->
       <div class="form-group">
-        <label for="content">Content</label>
-        <div id="editor" style="height: 500px;"></div>
-        <textarea name="content" class="form-control" id="hidden-content" rows="10" style="display:none;"></textarea>
+        <!-- create quil #editor  -->
+        <div id="editor" style="height: 500px;">
+           <p>Hello World!</p> 
+        </div>
+        <!-- hidden input to store the content -->
+        <textarea name="content" class="form-control" id="content" style="display:none;"></textarea>
       </div>
 
-  
       <!-- Submit -->
-
-      <button type="submit" name="submit" class="btn btn-primary">Create Post</button>
+      <button type="submit" name="submit" id="submit" class="btn btn-primary" >Create Post</button>
   </form>
 </div>
 <!-- End of Main Content -->
 
+
+<script>
+        const quill = new Quill('#editor', {
+          theme: 'snow'
+        });
+
+        document.querySelector("form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var content = quill.root.innerHTML;
+        document.getElementById("content").value = content;
+        document.querySelector("form").submit();
+});
+      </script>
 
 <?php include('includes/footer.php'); ?>

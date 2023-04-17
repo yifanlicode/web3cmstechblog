@@ -6,9 +6,22 @@
 
 <?php
 
+// Add the following code at the beginning of the file after require('includes/connect.php');
+if(!isset($_SESSION)) {
+  session_start();
+}
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+  $_SESSION['message'] = "Please login to check the blog list.";
+  header("Location: login.php");
+  exit;
+}
+
 // blog-list.php
-require('connect.php');
-$sort = isset($_GET['sort']) ? $_GET['sort'] : '';
+require('includes/connect.php');
+
+$sort = isset($_GET['sort']) ? $_GET['sort'] : ''; // Get the sort value from the GET parameter
 
 // Get the sort value from the GET parameter
 
@@ -18,22 +31,22 @@ if ($sort == 'post_date') {
   $query = "SELECT a.*, c.cat_title as category_name 
             FROM posts a
             INNER JOIN categories c ON a.post_category_id = c.cat_id
-            ORDER BY a.post_date ASC
-            LIMIT 10
+            ORDER BY a.post_date DESC
+            LIMIT 18
   ";
 } else if ($sort == 'update_date') {
   $query = "SELECT a.*, c.cat_title as category_name 
   FROM posts a
   INNER JOIN categories c ON a.post_category_id = c.cat_id
-  ORDER BY a.update_date ASC
-  LIMIT 10";
+  ORDER BY a.update_date DESC
+  LIMIT 18";
 } else {
   // Default sort by post_views_count
   $query = "SELECT a.*, c.cat_title as category_name 
             FROM posts a
             INNER JOIN categories c ON a.post_category_id = c.cat_id
             ORDER BY a.post_views_count DESC
-            LIMIT 10
+            LIMIT 18
   ";
 }
 
@@ -41,7 +54,10 @@ $statement = $db->prepare($query);
 $statement->execute();
 $blogs = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+
 ?>
+
+
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
   <?php foreach ($blogs as $blog) : ?>
@@ -50,7 +66,7 @@ $blogs = $statement->fetchAll(PDO::FETCH_ASSOC);
         <div class="card-body">
           <div class="card-text d-flex flex-column align-items-start">
             <h2 class="card-title text-primary">
-              <a href="view.php?id=<?= htmlspecialchars($blog['post_id']) ?>">
+              <a href="full_page.php?id=<?= htmlspecialchars($blog['post_id']) ?>">
                 <?= htmlspecialchars($blog['post_title']) ?>
               </a>
             </h2>
@@ -60,12 +76,6 @@ $blogs = $statement->fetchAll(PDO::FETCH_ASSOC);
                 <?= date("F d, Y", strtotime($blog['post_date'])) ?>
               </small>
             </div>
-<!-- 
-            <div class="card-text text-muted">
-              <small>
-              <?= htmlspecialchars($blog['category_name']) ?> -
-              </small>
-            </div> -->
 
 
             <!-- display blog cover-image -->
@@ -74,11 +84,11 @@ $blogs = $statement->fetchAll(PDO::FETCH_ASSOC);
             if (strlen($image) > 0) :
             ?>
               <div class="card-text text-muted">
-                <img src="<?= $image ?>" alt="cover-image" class="img-fluid">
+                <img src="uploads/<?= $image ?>" alt="cover-image" class="img-fluid">
               </div>
             <?php endif ?>
 
-        
+    
             <!-- display blog content -->
             <?php
             $content = htmlspecialchars($blog['post_content']);
@@ -87,7 +97,7 @@ $blogs = $statement->fetchAll(PDO::FETCH_ASSOC);
             ?>
               <div class="card-text text-muted"><?= $truncated_content ?></div>
               <div class="text-end">
-              <a href="view.php?id=<?= urlencode($blog['post_id']) ?>">
+              <a href="full_page.php?id=<?= urlencode($blog['post_id']) ?>">
                   Read more >>
                 </a>
               </div>
