@@ -32,7 +32,7 @@ include('includes/header.php');
       <?php if (isset($_SESSION['user_id'])) : ?>
         <div class="d-flex justify-content-end mb-3 align-items-center">
           <label class="me-2 fw-bold" for="sort-by-select">Sort by:</label>
-          <select class="form-select-sm rounded-pill border-0" onchange="sortPosts(this.value)">
+          <select class="form-select-sm rounded-pill border-0"  id="sort-by-select" onchange="sortPosts(this.value)">
             <option value="post_views_count" <?php if ($sort == '' || $sort == 'post_views_count') echo 'selected' ?>>Views</option>
             <option value="post_title" <?php if ($sort == 'post_title') echo 'selected' ?>>Title</option>
             <option value="post_date" <?php if ($sort == 'post_date') echo 'selected' ?>>Post Date</option>

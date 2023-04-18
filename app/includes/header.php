@@ -3,7 +3,7 @@
 -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <!-- SEO  -->
   <meta name="description" content="Web3 Launchpad is a one-stop destination for anyone looking to learn and work in the Web3 and blockchain industry.">
@@ -16,7 +16,7 @@
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="../public/css/bootstrap.min.css">
   <link rel="stylesheet" href="../public/css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
 
   <!-- JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
@@ -29,7 +29,7 @@
   <script src="//cdn.quilljs.com/1.0.0/quill.min.js"></script>
 
   <!-- Theme included stylesheets -->
-  <link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
+  <link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
   <!-- <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.core.css"> -->
 
   <!-- jQuery2023 -->
