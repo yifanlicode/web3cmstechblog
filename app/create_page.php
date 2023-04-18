@@ -32,41 +32,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $post_status = isset($_POST['post_status']) ? $_POST['post_status'] : '';
   $author = $_SESSION['username'];
 
-  
-    if (!empty($category_name)) {
-      // Category name provided, check if it already exists in the database
 
-      $statement = $db->prepare('SELECT cat_id FROM categories WHERE cat_title = :cat_title');
+  if (!empty($category_name)) {
+    // Category name provided, check if it already exists in the database
+    $statement = $db->prepare('SELECT cat_id FROM categories WHERE cat_title = :cat_title');
+    $statement->bindValue(':cat_title', $category_name);
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+
+    if ($result) { // Category already exists, use its ID
+      $category_id = $result['cat_id']; // Get the category ID
+      echo "Category ID: " . $category_id . "<br>";
+    } else {
+      echo "Category ID: " . $category_id . "<br>";
+      $statement = $db->prepare('INSERT INTO categories (cat_title, created_at, updated_at) VALUES (:cat_title, NOW(), NOW())
+        ');
       $statement->bindValue(':cat_title', $category_name);
       $statement->execute();
-      $result = $statement->fetch(PDO::FETCH_ASSOC);
-      $statement->closeCursor();
-
-      if ($result) { // Category already exists, use its ID
-        $category_id = $result['cat_id']; // Get the category ID
-      } else {
-        echo "Category ID: " . $category_id . "<br>";
-        $statement = $db->prepare('INSERT INTO categories (cat_title, created_at, updated_at) VALUES (:cat_title, NOW(), NOW())
-        ');
-        $statement->bindValue(':cat_title', $category_name);
-        $statement->execute();
-        $category_id = $db->lastInsertId();
-        // echo "Category ID: " . $category_id . "<br>";
-      }
-    } else {
-      echo "Error: Category name is empty.You must choose one . "; 
-
+      $category_id = $db->lastInsertId();
     }
-  
-  
+  } else {
+    $category_id = filter_input(INPUT_POST, 'category_id', FILTER_SANITIZE_NUMBER_INT);
+  }
+
 
   // Create a new tag if the user entered a new tag name in the form field
-  $tag_names = array_map('trim', explode(',', $tag_names));
+  // $tag_names = array_map('trim', explode(',', $tag_names));
+  $tag_names = isset($_POST['tag']) ? explode(',', $_POST['tag']) : [];
 
-  echo "Content: " . $content . "<br>";
-  echo "Title: " . $title . "<br>";
-  echo "Category ID: " . $category_id . "<br>";
-  echo "Post Status: " . $post_status . "<br>";
+ 
   // Insert the post into the database
   $query = "INSERT INTO posts(
     post_category_id,
@@ -88,11 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     NOW()
   )";
 
-    // Print out the values for debugging 
-    // echo "Content: " . $content . "<br>";
-    // echo "Title: " . $title . "<br>";
-    // echo "Category ID: " . $category_id . "<br>";
-    // echo "Post Status: " . $post_status . "<br>";
 
   $statement = $db->prepare($query);
   $statement->bindValue(':category_id', $category_id);
@@ -107,7 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Upload image
   if (!is_null($image) && !empty($image['tmp_name'])) {
     $mime_type = mime_content_type($image['tmp_name']);
-
     if (in_array($mime_type, ['image/jpeg', 'image/png', 'image/gif'])) {
       $filename = uniqid('', true) . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
       $upload_path = 'uploads/' . $filename;
@@ -126,7 +115,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else {
     $statement->bindValue(':image', null, PDO::PARAM_NULL);
   }
-
 
   if ($statement->execute()) {
     // header('Location: index.php'); 
@@ -151,46 +139,24 @@ include('includes/header.php');
   <h1 class="text-center">Create a New Blog Post</h1>
   <form action="create_page.php" method="post" enctype="multipart/form-data">
 
-
+  <div class="row">
+      <div class="col-md-9 offset-md-2">
+        <div class="card">
+          <div class="card-body">
     <!-- Title -->
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="title">Title</label>
       <input type="text" name="title" class="form-control" id="title" placeholder="Enter Title" required>
     </div>
 
-    <!-- Category  -->
-<div class="form-group">
-  <label for="category">Category</label>
-  <select name="category_id" class="form-control" id="category_id">
-    <?php foreach ($categories as $category) : ?>
-      <option value="<?= $category['cat_id']; ?>"><?= $category['cat_title']; ?></option>
-    <?php endforeach; ?>
-    <option value="new">Add a new category</option>
-  </select>
-</div>
-<!-- New Category -->
-<div class="form-group" id="new_category_group" style="display:none;">
-  <label for="new_category">New Category</label>
-  <input type="text" name="category_name" class="form-control" id="new_category" placeholder="Enter New Category">
-</div>
-
-
-
-
-    <!-- Tags -->
-    <div class="form-group">
-      <label for="tag">Tags </label>
-      <input type="text" name="tag" class="form-control" id="tag" placeholder="Enter Tags">
-    </div>
-
     <!-- Author -->
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="author">Author:</label>
       <input type="text" class="form-control" name="author" id="author" value="<?= $_SESSION['username']; ?>" disabled>
     </div>
 
     <!-- Post_status -->
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="post_status">Post Status</label>
       <select name="post_status" class="form-control" id="post_status">
         <option value="draft">Draft</option>
@@ -198,22 +164,65 @@ include('includes/header.php');
       </select>
     </div>
 
-    <!-- Upload Image -->
-    <div class="form-group">
-      <label for="page_image">Cover Image</label>
-      <input type="file" name="page_image" class="form-control-file" id="page_image">
+    <!-- Category  -->
+    <div class="form-group mb-3">
+      <label for="category">Category</label>
+      <select name="category_id" class="form-control" id="category_id">
+        <?php foreach ($categories as $category) : ?>
+          <option value="<?= $category['cat_id']; ?>"><?= $category['cat_title']; ?></option>
+        <?php endforeach; ?>
+        <option value="new">Add a new category</option>
+      </select>
     </div>
 
+    
+    <!-- New Category -->
+    <div class="form-group mb-3" id="new_category_group" style="display:none;">
+      <label for="new_category">New Category</label>
+      <input type="text" name="category_name" class="form-control" id="new_category" placeholder="Enter New Category">
+    </div>
+
+    <!-- Tags -->
+    <div class="form-group mb-3">
+      <div class="input-group">
+        <input type="hidden" name="tag" id="hidden-tag-input">
+        <input type="text" class="form-control" id="tag-input" placeholder="Enter tags">
+        <button type="button" class="btn btn-outline-secondary" id="add-tag-btn">Add Tag</button>
+      </div>
+      <div id="tag-list" class="mt-2"></div>
+    </div>
+
+   
+
+    <!-- Upload Image -->
+  <!-- Upload Image -->
+<div class="form-group mb-3">
+  <div class="input-group">
+    <input type="file" name="page_image" class="form-control-file d-none" id="page_image">
+    <input type="text" class="form-control" readonly id="page_image_label" placeholder="Choose file">
+    <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('page_image').click()">Browse</button>
+  </div>
+</div>
+
+
     <!-- Content -->
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="content">Content</label>
       <textarea name="content" class="form-control" id="content" style="height:500px;"></textarea>
     </div>
 
     <!-- Submit -->
+    
     <button type="submit" name="submit" id="submit" class="btn btn-primary">Create Post</button>
   </form>
 </div>
+</div>
+</div>
+</div>
+</div>
+
 <!-- End of Main Content -->
+
+
 
 <?php include('includes/footer.php'); ?>
