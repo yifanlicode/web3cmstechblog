@@ -56,7 +56,7 @@
       $statement->closeCursor();
       foreach ($tags as $tag) {
         $tagName = $tag['post_tags'];
-        $tagLink = "blog-list.php?tag=$tagName";
+        $tagLink = "blog_list.php?tag=$tagName";
       ?>
         <a href="<?= $tagLink ?>" class="badge badge-primary"><?= $tagName ?></a>
       <?php } ?>

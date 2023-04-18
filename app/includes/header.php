@@ -2,17 +2,8 @@
   header file for all pages
 -->
 
-<?php
-if (session_status() !== PHP_SESSION_ACTIVE) {
-  session_start();
-}
-
-?>
-
-
 <!DOCTYPE html>
 <html>
-
 <head>
   <!-- SEO  -->
   <meta name="description" content="Web3 Launchpad is a one-stop destination for anyone looking to learn and work in the Web3 and blockchain industry.">
@@ -88,14 +79,6 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
             <a class="nav-link" href="create_page.php">PostBlog</a>
           </li>
 
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="categories.php" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Courses</a>
-              <a class="dropdown-item" href="#"></a>
-              <a class="dropdown-item" href="#">TechBlogs</a>
-            </div>
-          </li> -->
         </ul>
         <!-- search bar -->
         <form class="d-flex">

@@ -48,22 +48,11 @@
 </footer>
 <!-- End of Footer -->
 
-<!-- Sort posts -->
-<script>
-  function sortPosts(sortType) {
-    const encodedSortType = encodeURIComponent(sortType);
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        const blogListContainer = document.getElementById('blog-list-container');
-        blogListContainer.innerHTML = this.responseText;
-      }
-    };
-    xhr.open('GET', `blog-list.php?sort=${encodedSortType}`, true);
-    xhr.send();
-  }
-</script>
 
+
+
+<!-- main.js -->
+<script src=" ../public/js/main.js"></script>
 
 
 </body>
