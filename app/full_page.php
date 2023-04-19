@@ -13,16 +13,13 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
   session_start();
 }
 
-
 // Get the post ID and validate it
-
 $post_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
 $query = "SELECT p.*, c.cat_title
-FROM posts p
-LEFT JOIN categories c ON p.post_category_id = c.cat_id
-WHERE p.post_id = :id
-";
+          FROM posts p
+          LEFT JOIN categories c ON p.post_category_id = c.cat_id
+          WHERE p.post_id = :id
+          ";
 
 $statement = $db->prepare($query);
 $statement->bindValue(':id', $post_id);
@@ -47,6 +44,40 @@ if ($post) {
   header("Location: index.php");
   exit;
 }
+
+$comment_post_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+echo "comment_post_id: $comment_post_id<br>";
+
+if (isset($_POST['submit'])) {
+  // Get the comment content
+  $content = filter_input(INPUT_POST, 'comment_content', FILTER_SANITIZE_STRING);
+  echo "content: $content<br>";
+  $user_id = $_SESSION['user_id'];
+  echo "user_id: $user_id<br>";
+
+  try {
+    // Insert the comment into the database
+    $query = "INSERT INTO comments (comment_post_id, comment_user_id, comment_content, comment_date)
+    VALUES (:post_id, :user_id, :content, NOW())";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':post_id', $comment_post_id);
+    $statement->bindValue(':user_id', $user_id);
+    $statement->bindValue(':content', $content);
+    $statement->execute();
+    $statement->closeCursor();
+    echo "Comment submitted successfully<br>";
+  } catch (PDOException $e) {
+    echo "Error: " . $e->getMessage() . "<br>";
+  }
+}
+
+// Get the comments for the post from the database and display them on the page 
+  $query = "SELECT * FROM comments INNER JOIN users ON comments.comment_user_id = users.user_id WHERE comments.comment_post_id = :id ORDER BY comment_date DESC";
+  $statement = $db->prepare($query);
+  $statement->bindValue(':id', $post_id);
+  $statement->execute();
+  $comments = $statement->fetchAll();
+  $statement->closeCursor();
 
 include 'includes/header.php';
 
@@ -123,15 +154,12 @@ include 'includes/header.php';
     <!-- Sidebar -->
     <?php include 'includes/sidebar.php'; ?>
     <!-- End of sidebar -->
-
-    <!-- comments -->
-    <!-- Include comments.php -->
-    <?php include 'comments.php'; ?>
-
-
   </div>
 </div>
 <!-- End of Main Content -->
+
+<!-- Include comments.php -->
+<?php include 'includes/comments.php'; ?>
 
 
 <!-- Footer -->
