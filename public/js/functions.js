@@ -1,14 +1,4 @@
 
-$(document).ready(function() {
-  $('#category_id').change(function() {
-    if ($(this).val() == 'new') {
-      $('#new_category_group').show();
-    } else {
-      $('#new_category_group').hide();
-    }
-  });
-});
-
 
 //tags input
 $(document).ready(function() {
@@ -67,6 +57,52 @@ $(document).ready(function() {
     $('#page_image_label').val(fileName);
   });
 });
+
+
+//add category name to input field USE VANILLA JS
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Category dropdown logic
+  const categoryDropdownItems = document.querySelectorAll('#categoryDropdown + .dropdown-menu a');
+  const categoryDropdown = document.getElementById('categoryDropdown');
+  const categoryId = document.getElementById('category_id');
+  const newCategoryGroup = document.getElementById('new_category_group');
+
+  categoryDropdownItems.forEach(item => {
+    item.addEventListener('click', function (e) {
+      e.preventDefault();
+      const value = this.getAttribute('data-value');
+      const text = this.textContent;
+      categoryDropdown.textContent = text;
+      categoryId.value = value;
+
+      // Show the new category input field if "Add a new category" is selected
+      if (value === 'new') {
+        newCategoryGroup.style.display = 'block';
+      } else {
+        newCategoryGroup.style.display = 'none';
+      }
+    });
+  });
+
+  // Post_status dropdown logic
+  const postStatusDropdownItems = document.querySelectorAll('#postStatusDropdown + .dropdown-menu a');
+  const postStatusDropdown = document.getElementById('postStatusDropdown');
+  const postStatus = document.getElementById('post_status');
+
+  postStatusDropdownItems.forEach(item => {
+    item.addEventListener('click', function (e) {
+      e.preventDefault();
+      const value = this.getAttribute('data-value');
+      const text = this.textContent;
+      postStatusDropdown.textContent = text;
+      postStatus.value = value;
+    });
+  });
+});
+
+
+
 
 
 
