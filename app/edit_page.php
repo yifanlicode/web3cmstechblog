@@ -68,45 +68,44 @@ if (isset($_POST['update_post'])) {
 
   // Check if a new image has been uploaded and delete the old image if it exists
   if (isset($_FILES['page_image']) && $_FILES['page_image']['error'] == 0) {
-   
+
     //delete the old image
     $image_path = "uploads/" . $post['post_image'];
     if (file_exists($image_path)) {
       unlink($image_path);
     }
 
-  // Upload and process the new image
-  $image = $_FILES['page_image'];
+    // Upload and process the new image
+    $image = $_FILES['page_image'];
 
     // Check if the uploaded file is an image
     $mime_type = mime_content_type($image['tmp_name']);
     if (in_array($mime_type, ['image/jpeg', 'image/png', 'image/gif'])) {
 
-// Resize and save the image
-$filename = uniqid('', true) . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
-$upload_path = 'uploads/' . $filename;
-$image_resize = new \Gumlet\ImageResize($image['tmp_name']);
-$image_resize->resizeToWidth(700);
-$image_resize->save($upload_path);
+      // Resize and save the image
+      $filename = uniqid('', true) . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
+      $upload_path = 'uploads/' . $filename;
+      $image_resize = new \Gumlet\ImageResize($image['tmp_name']);
+      $image_resize->resizeToWidth(700);
+      $image_resize->save($upload_path);
 
-    // Update the post image in the database
-    $query = "UPDATE posts SET post_image = :image WHERE post_id = :id";
+      // Update the post image in the database
+      $query = "UPDATE posts SET post_image = :image WHERE post_id = :id";
 
 
-    $stmt = $db->prepare($query);
-    $stmt->bindValue(':image', $filename);
-    $stmt->bindValue(':id', $post_id, PDO::PARAM_INT);
-    $stmt->execute();
+      $stmt = $db->prepare($query);
+      $stmt->bindValue(':image', $filename);
+      $stmt->bindValue(':id', $post_id, PDO::PARAM_INT);
+      $stmt->execute();
 
-    $post_image = $image_name;
-
+      $post_image = $image_name;
+    } else {
+      $error = "The uploaded file is not a valid image. Please upload a JPEG, PNG or GIF image.";
+    }
   } else {
-    $error = "The uploaded file is not a valid image. Please upload a JPEG, PNG or GIF image.";
+    // Handle the case where no new image is uploaded
+    $post_image = $post['post_image'];
   }
-}else {
-  // Handle the case where no new image is uploaded
-  $post_image = $post['post_image'];
-}
 
 
 
@@ -167,74 +166,99 @@ include 'includes/header.php';   // Path: app/apis/includes/header.php
 
 <!-- Main Content -->
 <div class="container my-5">
-  <h1>Edit Blog</h1>
+  <h3 class="text-center">Edit Blog</h3>
   <form action="edit_page.php?id=<?= $post_id ?>" method="post" enctype="multipart/form-data">
-    <!-- title -->
-    <div class="form-group">
-      <label for="title">Title:</label>
-      <input type="text" class="form-control" name="title" id="title" value="<?= $post['post_title'] ?>">
-    </div>
+    <div class="row">
+      <div class="col-md-9 offset-md-2">
+        <div class="card">
+          <div class="card-body">
+            <!-- title -->
+            <div class="form-group mb-3">
+              <div class="input-group align-items-center">
+                <input type="text" name="title" class="form-control" id="title" value="<?= $post['post_title'] ?>" required>
+              </div>
+            </div>
 
-    <!-- category -->
-    <div class="form-group">
-      <label for="category">Category:</label>
-      <!-- Replace with the following dropdown list -->
-      <select name="category" class="form-control" id="category">
-        <?php foreach ($categories as $cat) : ?>
-          <option value="<?php echo $cat['cat_id']; ?>" <?php echo ($cat['cat_id'] == $post['post_category_id']) ? 'selected' : ''; ?>>
-            <?php echo $cat['cat_title']; ?>
-          </option>
-        <?php endforeach; ?>
-      </select>
-    </div>
-
-    <!-- Tags -->
-    <div class="form-group">
-      <label for="tags">Tags:</label>
-      <input type="text" class="form-control" name="tags" id="tags" value="<?= $post['post_tags'] ?>">
-    </div>
+            <!-- 显示作者名 -->
+            <div class="form-group mb-3">
+              <div class="input-group align-items-center">
+                <input type="text" class="form-control" name="author" id="author" value="<?= $post['post_author'] ?>" disabled>
+              </div>
+            </div>
 
 
-    <!-- 显示作者名 -->
-    <div class="form-group">
-      <label for="author">Author:</label>
-      <input type="text" class="form-control" name="author" id="author" value="<?= $post['post_author'] ?>" disabled>
-    </div>
+
+            <!-- Status input field -->
+            <div class="form-group mb-3">
+              <div class="input-group">
+                <select name="status" id="status" class="form-control">
+                  <option value="draft" <?php echo ($post['post_status'] == 'draft') ? 'selected' : ''; ?>>Draft</option>
+                  <option value="published" <?php echo ($post['post_status'] == 'published') ? 'selected' : ''; ?>>Published</option>
+                </select>
+              </div>
+            </div>
 
 
-    <!-- Status input field -->
-    <div class="form-group">
-      <label for="status">Status:</label>
-      <select name="status" id="status" class="form-control">
-        <option value="draft" <?php echo ($post['post_status'] == 'draft') ? 'selected' : ''; ?>>Draft</option>
-        <option value="published" <?php echo ($post['post_status'] == 'published') ? 'selected' : ''; ?>>Published</option>
-      </select>
-    </div>
+            <!-- category -->
+            <div class="form-group">
+              <div class="input-group">
 
-    <!-- Image Upload-->
-    <div class="form-group">
-      <label for="image">Image:</label>
-      <input type="file" class="form-control-file" name="page_image" id="page_image">
-    </div>
+                <!-- Replace with the following dropdown list -->
+                <select name="category" class="form-control" id="category">
+                  <?php foreach ($categories as $cat) : ?>
+                    <option value="<?php echo $cat['cat_id']; ?>" <?php echo ($cat['cat_id'] == $post['post_category_id']) ? 'selected' : ''; ?>>
+                      <?php echo $cat['cat_title']; ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
 
-    <!-- Delete Image Checkbox -->
-    <div class="form-group form-check">
-      <input type="checkbox" class="form-check-input" id="delete_image" name="delete_image">
-      <label class="form-check-label" for="delete_image">Delete Image</label>
-    </div>
+            <!-- Tags -->
+            <div class="form-group">
+              <div class="input-group">
+
+                <input type="text" class="form-control" name="tags" id="tags" value="<?= $post['post_tags'] ?>">
+              </div>
+            </div>
 
 
-    <!-- Content -->
-    <div class="form-group">
-      <label for="content">Content:</label>
-      <textarea name="content" id="content" class="form-control" rows="10"><?= $post['post_content'] ?></textarea>
-    </div>
+            <!-- Image Upload-->
+            <div class="form-group">
+              <input type="file" class="form-control-file" name="page_image" id="page_image">
+            </div>
 
-    <div class="form-group">
-      <input type="hidden" name="id" value="<?= $post['post_id'] ?>">
-      <input type="submit" class="btn btn-primary" name="update_post" value="Update" onclick="return confirm('ARE YOU SURE TO UPDATE THIS BLOG?')">
-      <input type="submit" class="btn btn-danger" name="delete_post" value="Delete" onclick="return confirm('ARE YOU SURE TO DELETE THIS BLOG?')">
-    </div>
+            <!-- Delete Image Checkbox -->
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="delete_image" name="delete_image">
+              <label class="form-check-label" for="delete_image">Delete Image</label>
+            </div>
+
+
+            <!-- Content -->
+            <div class="form-group mb-3">
+              <!-- <label for="content" class="form-label">Content</label> -->
+              <textarea name="content" id="content" class="form-control" rows="10"><?= $post['post_content'] ?></textarea>
+              <script>
+                tinymce.init({
+                  selector: '#content',
+                  menubar: false,
+                  toolbar: 'undo redo | formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link image',
+                  plugins: 'link image code',
+                  default_link_target: '_blank',
+                  image_dimensions: false,
+                  image_uploadtab: false,
+                  image_class_list: false,
+                  content_style: 'body {font-family: Arial,Helvetica,sans-serif; font-size: 16px; line-height: 1.6;}',
+                });
+              </script>
+            </div>
+
+            <div class="form-group">
+              <input type="hidden" name="id" value="<?= $post['post_id'] ?>">
+              <input type="submit" class="btn btn-primary" name="update_post" value="Update" onclick="return confirm('ARE YOU SURE TO UPDATE THIS BLOG?')">
+              <input type="submit" class="btn btn-danger" name="delete_post" value="Delete" onclick="return confirm('ARE YOU SURE TO DELETE THIS BLOG?')">
+            </div>
   </form>
 </div>
 <!-- End of Main Content -->

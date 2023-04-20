@@ -118,14 +118,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if ($statement->execute()) {
     $post_id = $db->lastInsertId();
-    header('Location: full_page.php?id=' . $post_id); 
+    header('Location: full_page.php?id=' . $post_id);
     exit;
   } else {
     header('Location: create_page.php');
     echo 'Error creating post';
   }
 }
-  
+
 
 // Get all categories
 $statement = $db->query('SELECT * FROM categories');
@@ -223,10 +223,23 @@ include('includes/header.php');
 
             <!-- Content -->
             <div class="form-group mb-3">
-
-              <label for="content" class="form-label">Content</label>
-              <textarea name="content" class="form-control" id="content" style="height:500px;"></textarea>
+              <textarea name="content" id="content" style="height: 500px;"></textarea>
             </div>
+            <script>
+              // tineMCE editor 
+              tinymce.init({
+                selector: '#content',
+                menubar: false,
+                toolbar: 'undo redo | formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link image',
+                plugins: 'link image code',
+                default_link_target: '_blank',
+                image_dimensions: false,
+                image_uploadtab: false,
+                image_class_list: false,
+                content_style: 'body {font-family: Arial,Helvetica,sans-serif; font-size: 16px; line-height: 1.6;}',
+              });
+            </script>
+
 
             <!-- Submit -->
             <button type="submit" name="submit" id="submit" class="btn btn-primary">Create Post</button>
