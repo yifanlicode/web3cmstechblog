@@ -1,5 +1,6 @@
 -- phpMyAdmin SQL Dump
--- version 2.1
+-- version 2.3
+-- updated: 2023-04-18 
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:31337
@@ -7,10 +8,8 @@
 -- Server version:  libmysql - mysqlnd 8.2.0 
 -- PHP Version: 8.2.0
 
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO"; 
 SET time_zone = "+00:00"; 
-
 
 --
 -- Database: web3techblog_db``
@@ -20,19 +19,11 @@ SET time_zone = "+00:00";
 CREATE TABLE `categories` (
   `cat_id` int(3) NOT NULL AUTO_INCREMENT,
   `cat_title` varchar(255) NOT NULL DEFAULT '',
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`cat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Comments表
-CREATE TABLE `comments` (
-  `comment_id` int(3) NOT NULL AUTO_INCREMENT,
-  `comment_post_id` int(3) NOT NULL,
-  `comment_user_id` int(3) NOT NULL,
-  `comment_content` text NOT NULL,
-  `comment_status` varchar(255) NOT NULL DEFAULT 'pending',
-  `comment_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`comment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Posts表
 CREATE TABLE `posts` (
@@ -52,6 +43,17 @@ CREATE TABLE `posts` (
   PRIMARY KEY (`post_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Comments表
+CREATE TABLE `comments` (
+  `comment_id` int(3) NOT NULL AUTO_INCREMENT,
+  `comment_post_id` int(3) NOT NULL,
+  `comment_user_id` int(3) NOT NULL,
+  `comment_content` text NOT NULL,
+  `comment_status` varchar(255) NOT NULL DEFAULT 'pending',
+  `comment_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`comment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Users表
 CREATE TABLE `users` (
   `user_id` int(3) NOT NULL AUTO_INCREMENT,
@@ -59,18 +61,24 @@ CREATE TABLE `users` (
   `user_email` varchar(255) NOT NULL,
   `user_password` varchar(255) NOT NULL,
   `user_role` varchar(255) NOT NULL DEFAULT 'registered',
-  -- `user_firstname` varchar(255) NOT NULL DEFAULT '',
-  -- `user_lastname` varchar(255) NOT NULL DEFAULT '',
-  -- `user_image` text NOT NULL DEFAULT '',
-  -- `randSalt` varchar(255) NOT NULL DEFAULT '$2y$10$iusesomecrazystrings22',
-  -- `token` text NOT NULL DEFAULT '',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- Users_online表
+
+
+删掉的表
+Users
+  -- `user_firstname` varchar(255) NOT NULL DEFAULT '',
+  -- `user_lastname` varchar(255) NOT NULL DEFAULT '',
+  -- `user_image` text NOT NULL DEFAULT '',
+  -- `randSalt` varchar(255) NOT NULL DEFAULT '$2y$10$iusesomecrazystrings22',
+  -- `token` text NOT NULL DEFAULT '',
+
+
+  -- Users_online表
 CREATE TABLE `users_online` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `session` varchar(255) NOT NULL,
@@ -81,4 +89,3 @@ CREATE TABLE `users_online` (
   PRIMARY KEY (`id`),
   KEY `time` (`time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-

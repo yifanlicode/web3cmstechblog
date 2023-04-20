@@ -17,3 +17,6 @@ function sortPosts(sortType) {
   xhr.open('GET', `includes/blog-list.php?sort=${encodedSortType}`, true);
   xhr.send();
 }
+
+
+

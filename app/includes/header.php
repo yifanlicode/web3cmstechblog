@@ -13,24 +13,17 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Web3 Launchpad</title>
 
-  <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="../public/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../public/css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
-
   <!-- JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-9VxxfO+hNdeNtKDeMVtJN7cbrZIz1w7KdM/0g2sXs3oVRFFmJmwp0Kd1i7B1UEGATLV0ix0rTLPdhjT9XUK1Rg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <!-- Main Quill library -->
-  <!-- Include the Quill library --> 
-  <script src="//cdn.quilljs.com/1.0.0/quill.js"></script>
-  <script src="//cdn.quilljs.com/1.0.0/quill.min.js"></script>
+  <!-- Include the Tinymce library --> 
+  <script src="https://cdn.tiny.cloud/1/v2iy4oyzovirp5rwlcwnr2tejnfss5ffuu2x7zrv29jyowgy/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  
+  <!--   Custom CSS -->
+  <link rel="stylesheet" href="../public/css/style.css">
 
-  <!-- Theme included stylesheets -->
-  <link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.core.css"> -->
 
   <!-- jQuery2023 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -38,6 +31,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
   <!-- Custom JavaScript -->
   <script src=" ../public/js/validation.js"></script>
+  <script src=" ../public/js/functions.js"></script>
+
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../public/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+
 
 </head>
 

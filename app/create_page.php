@@ -58,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
   // Create a new tag if the user entered a new tag name in the form field
-  // $tag_names = array_map('trim', explode(',', $tag_names));
   $tag_names = isset($_POST['tag']) ? explode(',', $_POST['tag']) : [];
 
 
@@ -219,7 +218,6 @@ include('includes/header.php');
                 <button class="btn btn-outline-primary" type="button" onclick="document.getElementById('page_image').click()">Upload</button>
               </div>
             </div>
-
 
             <!-- Content -->
             <div class="form-group mb-3">

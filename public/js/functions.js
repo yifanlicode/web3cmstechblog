@@ -1,5 +1,3 @@
-
-
 //tags input
 $(document).ready(function() {
   var tags = [];
@@ -60,7 +58,6 @@ $(document).ready(function() {
 
 
 //add category name to input field USE VANILLA JS
-
 document.addEventListener('DOMContentLoaded', function () {
   // Category dropdown logic
   const categoryDropdownItems = document.querySelectorAll('#categoryDropdown + .dropdown-menu a');

@@ -46,16 +46,16 @@ if ($post) {
 }
 
 $comment_post_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-echo "comment_post_id: $comment_post_id<br>";
+//echo "comment_post_id: $comment_post_id<br>";
 
 if (isset($_POST['submit'])) {
   // Get the comment content
   $content = filter_input(INPUT_POST, 'comment_content', FILTER_SANITIZE_STRING);
-  echo "content: $content<br>";
+  //echo "content: $content<br>";
   $user_id = $_SESSION['user_id'];
-  echo "user_id: $user_id<br>";
+  //echo "user_id: $user_id<br>";
 
-  try {
+ 
     // Insert the comment into the database
     $query = "INSERT INTO comments 
               (comment_post_id, comment_user_id, comment_content, comment_status, comment_date)
@@ -71,9 +71,7 @@ if (isset($_POST['submit'])) {
     $statement->execute();
     $statement->closeCursor();
     echo "Comment submitted successfully<br>";
-  } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage() . "<br>";
-  }
+  
 }
 
 // Get the comments for the post from the database and display them on the page 
