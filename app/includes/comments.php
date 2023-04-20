@@ -1,19 +1,36 @@
+
 <!-- Comments -->
 <div class="container my-5">
   <h3 class="fw-bold mb-4">Comments</h3>
   <hr>
+ 
+  <?php if (isset($_POST['submit'])) : ?>
+    <?php if ($_POST['captcha'] != $_SESSION['captcha']) : ?>
+      <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Oh snap!</strong> Captcha is incorrect and try again.
+      </div>
+    <?php else : ?>
+      <!-- Submit the comment here -->
 
+    <?php endif; ?>
+  <?php endif; ?>
+  
   <!-- Comment Form -->
   <?php if (isset($_SESSION['username'])) : ?>
+        <!-- Display error if captcha is incorrect -->
     <form action="<?= "full_page.php" . "?id=" . $comment_post_id ?>" method="post">
       <div class="form-group">
         <textarea class="form-control" name="comment_content" rows="4" placeholder="Write a comment"></textarea>
       </div>
+      <img src="includes/captcha.php" alt="Captcha">
+      <input type="text" name="captcha" required>
       <input type="submit" name="submit" value="Submit" class="btn btn-primary">
     </form>
   <?php else : ?>
     <p>Please <a href="login.php">log in</a> or <a href="register.php">register</a> to post a comment.</p>
   <?php endif; ?>
+  
   <hr>
 
   <!-- Display comments -->
@@ -32,7 +49,7 @@
 
 
     <?php
-    endforeach;
+  endforeach;
   else :
     ?>
 

@@ -49,8 +49,6 @@
 <!-- End of Footer -->
 
 
-
-
 <!-- main.js -->
 <script src=" ../public/js/main.js"></script>
 
