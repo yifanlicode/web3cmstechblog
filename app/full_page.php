@@ -15,6 +15,11 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 // Get the post ID and validate it
 $post_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+if (empty($post_id)) {
+  header("Location: index.php");
+  exit;
+}
+
 $query = "SELECT p.*, c.cat_title
           FROM posts p
           LEFT JOIN categories c ON p.post_category_id = c.cat_id
@@ -55,7 +60,11 @@ if (isset($_POST['submit'])) {
   $user_id = $_SESSION['user_id'];
   //echo "user_id: $user_id<br>";
 
- 
+    // Check if the entered captcha is correct
+    if ($_POST['captcha'] != $_SESSION['captcha']) {
+    // Captcha is incorrect
+    $error = "Captcha is incorrect, please try again.";
+     } else {
     // Insert the comment into the database
     $query = "INSERT INTO comments 
               (comment_post_id, comment_user_id, comment_content, comment_status, comment_date)
@@ -71,7 +80,7 @@ if (isset($_POST['submit'])) {
     $statement->execute();
     $statement->closeCursor();
     echo "Comment submitted successfully<br>";
-  
+  }
 }
 
 // Get the comments for the post from the database and display them on the page 
@@ -81,6 +90,7 @@ $query = "SELECT * FROM comments INNER JOIN users ON comments.comment_user_id = 
   $statement->execute();
   $comments = $statement->fetchAll();
   $statement->closeCursor();
+
 
 include 'includes/header.php';
 
@@ -95,11 +105,12 @@ include 'includes/header.php';
     <div class="col-lg-8">
       <!-- Article -->
       <article class="bg-light p-4 rounded">
-        <!-- Article Header -->
+        
+      <!-- Article Header -->
         <header class="mb-3">
           <div class="d-flex justify-content-between align-items-center mb-2">
             <!-- Article Title -->
-            <h1 class="fw-bold"><?= $postTitle ?></h1>
+            <h3 class="fw-bold"><?= $postTitle ?></h3>
             <!-- Edit Button -->
             <?php
             if (isset($_SESSION['username']) && $_SESSION['username'] === $postAuthor) {
@@ -112,45 +123,55 @@ include 'includes/header.php';
             ?>
           </div>
 
+          </header>
           <!-- Article Meta -->
-          <p class="fs-6 fw-bold text-muted mb-0">
-            Category: <a href="#">
-              <span class="text-primary"><?= $postCategory ?>
-              </span></a>
-          </p>
-          <p class="fs-6 fw-bold text-muted mb-0">
-            Tag:
-            <?php
-            $tags = explode(',', $postTags);
-            foreach ($tags as $tag) :
-            ?>
-              <a href="tag.php?name=<?= $tag ?>">
-                <span class="text-primary"><?= $tag ?></span>
+          <ul class="list-inline text-muted mb-2">
+            <li class="list-inline-item">
+              Author:
+              <a href="author.php?id=<?= $post['post_author'] ?>" class="text-primary">
+                <?= $postAuthor ?>
               </a>
-            <?php endforeach; ?>
-          </p>
-          <p class="fs-6 fw-bold text-muted mb-0">
-            Author:
-            <a href="author.php?id=<?= $post['post_author'] ?>">
-              <span class="text-primary"><?= $postAuthor ?></span>
-            </a>
-          </p>
-          <p class="fs-6 fw-bold text-muted mb-0">
-            Posted on <span class="text-primary"><?= $postDate ?></span>
-          </p>
-          <!-- updatedtiem -->
-          <p class="fs-6 fw-bold text-muted mb-0">
-            Updated on <span class="text-primary"><?= $postUpdatedTime ?></span>
-          </p>
-        </header>
+            </li>
+            <li class="list-inline-item">
+              Category: <a href="#" class="text-primary"><?= $postCategory ?></a>
+            </li>
+            <li class="list-inline-item">
+                Tag:
+                <?php
+                $tags = explode(',', $postTags);
+                $tagCount = count($tags);
+                for ($i = 0; $i < 4 && $i < $tagCount; $i++) {
+                  $tag = $tags[$i];
+                ?>
+                  <a href="tag.php?name=<?= $tag ?>" class="text-primary">
+                    <?= $tag ?>
+                  </a>
+                  <?php if ($i < $tagCount - 1) echo ', '; ?>
+                <?php } ?>
+              </li>
+
+          </ul>
+          <ul class="list-inline text-muted mb-2">
+            <li class="list-inline-item">
+              Posted: <span class="text-primary"><?= $postDate ?></span>
+            </li>
+            <li class="list-inline-item">
+              Updated: <span class="text-primary"><?= $postUpdatedTime ?></span>
+            </li>
+          </ul>
+
+
         <hr>
 
         <!-- Article Image -->
-        <img src="uploads/<?= $postImage ?>" alt="Post Image">
+        <?php if (!empty($postImage)): ?>
+          <div class="d-flex justify-content-center mb-3">
+            <img class="mg-thumbnail shadow" src="uploads/<?= $postImage ?>" alt="Post Image">
+          </div>
+            <?php endif; ?>
 
         <!-- Article Content -->
-        <p class="fs-5"><?= $postContent ?></p>
-      </article>
+        <p class="fs-5"><?= $postContent ?></p> </article>
 
     </div>
 

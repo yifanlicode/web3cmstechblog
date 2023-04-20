@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       try {
         $image_resize = new \Gumlet\ImageResize($image['tmp_name']);
-        $image_resize->resizeToWidth(800);
+        $image_resize->resizeToWidth(700);
         $image_resize->save($upload_path);
       } catch (\Gumlet\ImageResizeException $e) {
         error_log($e->getMessage());

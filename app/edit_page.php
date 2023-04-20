@@ -39,7 +39,7 @@ if (isset($_POST['update_post'])) {
 
   $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
   $category = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_NUMBER_INT);
-  $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
+  $content = $_POST['content'];
   $tags = filter_input(INPUT_POST, 'tags', FILTER_SANITIZE_STRING);
   $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_STRING);
   $page_image = filter_input(INPUT_POST, 'page_image', FILTER_SANITIZE_STRING);
