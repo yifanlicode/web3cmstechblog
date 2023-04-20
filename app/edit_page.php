@@ -33,10 +33,11 @@ $stmt->execute();
 $categories = $stmt->fetchAll();
 $stmt->closeCursor();
 
+// Fetch tags from posts table 
+
 
 // Update post if the form is submitted
 if (isset($_POST['update_post'])) {
-
   $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
   $category = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_NUMBER_INT);
   $content = $_POST['content'];
@@ -112,7 +113,6 @@ if (isset($_POST['update_post'])) {
         // Handle the case where the new category name is empty
         $error = "New category name cannot be empty";
       }
-  
 
   //title and content ,category can not be empty
   if (empty($title) || empty($content) || empty($category)) {
@@ -139,7 +139,6 @@ if (isset($_POST['update_post'])) {
     $stmt->bindValue(':author', $author);
     $stmt->bindValue(':id', $post_id, PDO::PARAM_INT);
     $stmt->execute();
-
 
     // Redirect to the full blog page after updating the post
     header("Location: full_page.php?id=$post_id");
@@ -197,14 +196,14 @@ include 'includes/header.php';   // Path: app/apis/includes/header.php
               </div>
             </div>
 
-
             <!-- Tags -->
             <div class="form-group mb-3">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">Tags</span>
                 </div>
-                <input type="text" class="form-control" name="tags" id="tags" value="<?= $post['post_tags'] ?>">
+                <input type="text" class="form-control" name="tags" id="tags" 
+                value="<?= $post['post_tags'] ?>">
               </div>
             </div>
 
