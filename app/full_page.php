@@ -57,6 +57,11 @@ if (isset($_POST['submit'])) {
 
   try {
     // Insert the comment into the database
+    $query = "INSERT INTO comments 
+              (comment_post_id, comment_user_id, comment_content, comment_status, comment_date)
+            VALUES 
+             (:post_id, :user_id, :content, 'pending', NOW())";
+
     $query = "INSERT INTO comments (comment_post_id, comment_user_id, comment_content, comment_date)
     VALUES (:post_id, :user_id, :content, NOW())";
     $statement = $db->prepare($query);
@@ -72,7 +77,7 @@ if (isset($_POST['submit'])) {
 }
 
 // Get the comments for the post from the database and display them on the page 
-  $query = "SELECT * FROM comments INNER JOIN users ON comments.comment_user_id = users.user_id WHERE comments.comment_post_id = :id ORDER BY comment_date DESC";
+$query = "SELECT * FROM comments INNER JOIN users ON comments.comment_user_id = users.user_id WHERE comments.comment_post_id = :id AND comments.comment_status = 'approved' ORDER BY comment_date DESC";
   $statement = $db->prepare($query);
   $statement->bindValue(':id', $post_id);
   $statement->execute();
@@ -160,7 +165,6 @@ include 'includes/header.php';
 
 <!-- Include comments.php -->
 <?php include 'includes/comments.php'; ?>
-
 
 <!-- Footer -->
 <?php include 'includes/footer.php'; ?>
