@@ -13,6 +13,7 @@ if (!isset($_SESSION['page_visit']) || $_SESSION['page_visit'] !== $comment_post
 
   // If the CAPTCHA is not submitted correctly 
   if (isset($_POST['submit'])) { // Submit comment
+    
     if ($_POST['captcha'] != $_SESSION['captcha']) { // Captcha is incorrect
       if (!isset($_SESSION['captcha_try_count'])) { // Set captcha try count
         $_SESSION['captcha_try_count'] = 1; // First try
