@@ -77,17 +77,23 @@
           </li>
 
           <li class="nav-item">
-  <a class="nav-link d-flex align-items-center" href="create_page.php">
-    <i class="fas fa-pencil-alt me-2"></i>Write
-  </a>
-</li>
+          <a class="nav-link d-flex align-items-center" href="create_page.php">
+            <i class="fas fa-pencil-alt me-2"></i>Write
+          </a>
+        </li>
         
-
         </ul>
+
         <!-- search bar -->
-        <form class="d-flex">
-          <input class="form-control me-sm-2" type="search" placeholder="Search">
-          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        <form action="search.php" method="GET" class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_query">
+        <select class="form-select me-2" aria-label="Category" name="category">
+              <option value="0">All Categories</option>
+              <option value="1">Tutorials</option>
+              <option value="2">Hacthons</option>
+              <option value="3">Jobs</option>
+            </select>
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
         </form>
 
         <!-- login and logout -->
