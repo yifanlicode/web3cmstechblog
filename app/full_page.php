@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
     $statement->bindValue(':content', $content);
     $statement->execute();
     $statement->closeCursor();
-    echo "Comment submitted successfully<br>";
+    // echo "Comment submitted successfully<br>";
   }
 }
 
