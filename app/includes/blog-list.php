@@ -17,6 +17,7 @@ switch($sort){
     $query = "SELECT a.*, c.cat_title as category_name 
               FROM posts a
               INNER JOIN categories c ON a.post_category_id = c.cat_id
+              WHERE a.post_status = 'published'
               ORDER BY a.post_date DESC
               LIMIT 18
     ";
@@ -26,6 +27,7 @@ switch($sort){
     $query = "SELECT a.*, c.cat_title as category_name 
               FROM posts a
               INNER JOIN categories c ON a.post_category_id = c.cat_id
+              WHERE a.post_status = 'published'
               ORDER BY a.update_date DESC
               LIMIT 18
     ";
@@ -35,6 +37,7 @@ switch($sort){
     $query = "SELECT a.*, c.cat_title as category_name 
               FROM posts a
               INNER JOIN categories c ON a.post_category_id = c.cat_id
+              WHERE a.post_status = 'published'
               ORDER BY a.post_title ASC
               LIMIT 18
     ";
@@ -44,6 +47,7 @@ switch($sort){
     $query = "SELECT a.*, c.cat_title as category_name 
               FROM posts a
               INNER JOIN categories c ON a.post_category_id = c.cat_id
+              WHERE a.post_status = 'published'
               ORDER BY a.post_views_count DESC
               LIMIT 18
     ";
@@ -53,6 +57,7 @@ switch($sort){
     $query = "SELECT a.*, c.cat_title as category_name 
               FROM posts a
               INNER JOIN categories c ON a.post_category_id = c.cat_id
+              WHERE a.post_status = 'published'
               ORDER BY a.update_date DESC
               LIMIT 18
     ";
