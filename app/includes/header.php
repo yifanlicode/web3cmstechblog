@@ -48,7 +48,7 @@
   <!-- nav bar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Web3 Launchpad</a>
+      <a class="navbar-brand" href="index.php">Web3 Launchpad</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -65,20 +65,23 @@
           </li> -->
 
           <li class="nav-item">
-            <a class="nav-link" href="index.php">Tutorials</a>
+            <a class="nav-link" href="category_page.php?cat_id=1">Tutorials</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="index.php">Hacthons</a>
+          <a class="nav-link" href="category_page.php?cat_id=2">Hacthons</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="index.php">Jobs</a>
+          <a class="nav-link" href="category_page.php?cat_id=3">Jobs</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="create_page.php">PostBlog</a>
-          </li>
+  <a class="nav-link d-flex align-items-center" href="create_page.php">
+    <i class="fas fa-pencil-alt me-2"></i>Write
+  </a>
+</li>
+        
 
         </ul>
         <!-- search bar -->
@@ -89,6 +92,8 @@
 
         <!-- login and logout -->
         <ul class="navbar-nav">
+        
+
           <?php if (isset($_SESSION['user_id'])) : ?>
             <li class="nav-item">
               <span class="nav-link">Welcome, <?php echo $_SESSION['username']; ?></span>

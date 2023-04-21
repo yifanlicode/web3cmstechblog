@@ -49,17 +49,15 @@ switch($sort){
     ";
     break;
     
-  default:
+    default:
     $query = "SELECT a.*, c.cat_title as category_name 
               FROM posts a
               INNER JOIN categories c ON a.post_category_id = c.cat_id
-              ORDER BY a.post_views_count DESC
+              ORDER BY a.update_date DESC
               LIMIT 18
     ";
     break;
-
 }
-
 
 $statement = $db->prepare($query);
 $statement->execute();
@@ -76,11 +74,11 @@ $blogs = $statement->fetchAll(PDO::FETCH_ASSOC);
       <div class="card h-100">
         <div class="card-body">
           <div class="card-text d-flex flex-column align-items-start">
-            <h2 class="card-title text-primary">
+            <h5 class="card-title text-primary">
               <a href="full_page.php?id=<?= htmlspecialchars($blog['post_id']) ?>">
                 <?= htmlspecialchars($blog['post_title']) ?>
               </a>
-            </h2>
+            </h5>
             <div class="card-text text-muted">
               <small>
               <?= htmlspecialchars($blog['post_author']) ?> -
@@ -103,8 +101,8 @@ $blogs = $statement->fetchAll(PDO::FETCH_ASSOC);
             <!-- display blog content -->
             <?php
             $content = htmlspecialchars($blog['post_content']);
-            if (strlen($content) > 200) :
-              $truncated_content = substr($content, 0, 200) . "...";            
+            if (strlen($content) > 150) :
+              $truncated_content = substr($content, 0, 150) . "...";            
             ?>
               <div class="card-text text-muted"><?= $truncated_content ?></div>
               <div class="text-end">
