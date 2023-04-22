@@ -53,8 +53,7 @@ include('includes/header.php');
 
 ?>
 
-
-<div class="container my-5">
+<div class="container-fluid my-5">
   <div class="row">
     <div class="col-lg-9">
 
@@ -88,11 +87,12 @@ include('includes/header.php');
 
                   <!-- display blog content -->
                   <?php
-                  $content = htmlspecialchars($post['post_content']);
-                  if (strlen($content) > 200) :
-                    $truncated_content = substr($content, 0, 200) . "...";
+                  $content =$post['post_content'];
+                  $content = strip_tags($content);
+                  if (strlen($content) > 180) :
+                    $truncated_content = substr($content, 0, 180) . "...";
                   ?>
-                    <div class="card-text text-muted"><?= $truncated_content ?></div>
+                <div class="card-text text-muted justified-text"><?= $truncated_content ?></div>
                     <div class="text-end">
                       <a href="full_page.php?id=<?= urlencode($post['post_id']) ?>">
                         Read more >>
@@ -131,7 +131,6 @@ include('includes/header.php');
 
     <?php include 'includes/sidebar.php'; ?>
   </div>
-
 
   <!-- Footer -->
   <?php include 'includes/footer.php'; ?>
