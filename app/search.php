@@ -7,6 +7,7 @@ if (!isset($_SESSION)) { // if session is not started then start it
 
 require 'includes/connect.php';
 
+
 // Get the search query and category from the request
 $search_query = isset($_GET['search_query']) ? trim($_GET['search_query']) : '';
 $category = isset($_GET['category']) ? trim($_GET['category']) : '';
@@ -15,19 +16,27 @@ $per_page = isset($_GET['per_page']) ? intval($_GET['per_page']) : 10;
 $offset = ($page - 1) * $per_page;
 
 //Prepare the query based on the search query and category
+// $query = "SELECT p.*,c.cat_title as cat_title 
+//           FROM posts p
+//           INNER JOIN categories c ON p.post_category_id = c.cat_id
+//           WHERE p.post_status = 'published' 
+//           AND (p.post_title LIKE :search_query OR p.post_content LIKE :search_query)";
+
+// only search in the title
 $query = "SELECT p.*,c.cat_title as cat_title 
           FROM posts p
           INNER JOIN categories c ON p.post_category_id = c.cat_id
           WHERE p.post_status = 'published' 
-          AND (p.post_title LIKE :search_query OR p.post_content LIKE :search_query)";
+          AND p.post_title LIKE :search_query";
 
 if ($category != 0) {
   $query .= " AND p.post_category_id = :category";
 }
 
-// Add the order by and limit clauses to the query to paginate the results 
-$query .= " ORDER BY p.post_date DESC 
+// Add the order by and limit clauses to the query to paginate the results
+$query .= " ORDER BY p.post_date DESC
             LIMIT :per_page OFFSET :offset"; // limit the number of results
+
 
 // Execute the query
 $statement = $db->prepare($query);
