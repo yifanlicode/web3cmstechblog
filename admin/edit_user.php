@@ -20,26 +20,30 @@ if (isset($_POST['update_user'])) {
   $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
   $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
   $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_STRING);
+  $new_password = filter_input(INPUT_POST, 'user_password', FILTER_SANITIZE_STRING);
 
   //Check the username and email address and role if they are empty
-  if (empty($username) || empty($email) || empty($role)) {
+  if (empty($username) || empty($email) || empty($role) || empty($new_password)) {
     $error = "Please fill in the required fields: Title, Content, Category";
   } else {
+      
+      $hashed_password = password_hash($new_password, PASSWORD_BCRYPT, array('cost' => 12));
 
     //Update user data in the database
-    $query = "UPDATE users SET 
+    $query = "  UPDATE users SET 
                 username = :username, 
                 user_email = :email, 
-                user_role = :role 
+                user_role = :role,
+                user_password = :hashed_password
                 WHERE user_id = :user_id";
     $statement = $db->prepare($query);
     $statement->bindParam(':username', $username);
     $statement->bindParam(':email', $email);
     $statement->bindParam(':role', $role);
+    $statement->bindParam(':hashed_password', $hashed_password);
     $statement->bindParam(':user_id', $user_id);
     $statement->execute();
     $statement->closeCursor();
-
 
     //Set a message to be displayed on the users page
     $_SESSION['message'] = "User updated successfully";
@@ -54,17 +58,16 @@ if (isset($_POST['update_user'])) {
 include "includes/admin_header.php";
 ?>
 
+
+
 <div class="col-lg-3">
-  <div class="list-group">
-    <a href="user.php" class="list-group-item list-group-item-action">Users</a>
-    <span class="visually-hidden">(current)</span>
-    <a href="posts.php" class="list-group-item list-group-item-action">Posts</a>
-    <a href="categories.php" class="list-group-item list-group-item-action">Categories</a>
-    <a href="comments.php" class="list-group-item list-group-item-action">Comments</a>
-  </div>
-
-
-
+      <div class="list-group">
+      <a href="user.php" class="list-group-item list-group-item-action">Users</a>
+        <a href="posts.php" class="list-group-item list-group-item-action">Posts</a>
+        <a href="categories.php" class="list-group-item list-group-item-action">Categories</a>
+        <a href="comments.php" class="list-group-item list-group-item-action">Comments</a>
+      </div>
+    </div>
   <!-- Dashboard content -->
   <div class="col-lg-9">
     <h3>Edit User Information</h3>
@@ -81,6 +84,10 @@ include "includes/admin_header.php";
             <input type="email" class="form-control" id="user_email" name="email" placeholder="Enter email" value="<?php echo $user['user_email']; ?>">
           </div>
           <div class="form-group mb-3">
+            <label for="user_password">New Password</label>
+            <input type="password" class="form-control" id="user_password" name="user_password" placeholder="New Password">
+          </div>
+          <div class="form-group mb-3">
             <label for="user_role">User Role</label>
             <select class="form-select" id="user_role" name="role">
               <option value="admin" <?php if ($user['user_role'] == 'admin') {
@@ -91,16 +98,11 @@ include "includes/admin_header.php";
                                           } ?>>Registered</option>
             </select>
           </div>
-
           <button type="submit" class="btn btn-primary" name="update_user">Update User</button>
         </form>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
+</div>
 <?php include "includes/admin_footer.php" ?>

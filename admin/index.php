@@ -1,12 +1,10 @@
 <?php include "includes/admin_header.php"; ?>
 
-<!-- Page content -->
-<div class="container my-4" style="min-height: calc(95vh - 120px);">
-  <div class="row">
-    <!-- Dashboard navigation -->
-    <div class="col-lg-3">
+
+
+<div class="col-lg-3">
       <div class="list-group">
-        <a href="users.php" class="list-group-item list-group-item-action">Users</a>
+        <a href="user.php" class="list-group-item list-group-item-action">Users</a>
         <a href="posts.php" class="list-group-item list-group-item-action">Posts</a>
         <a href="categories.php" class="list-group-item list-group-item-action">Categories</a>
         <a href="comments.php" class="list-group-item list-group-item-action">Comments</a>

@@ -15,6 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <!-- Your custom JS file -->
+    <script src="../public/js/verify_comments.js"></script>
     </body>
 
     </html>

@@ -76,8 +76,8 @@ function register_user($username, $email, $password,$role)
     return "error";
   }
 }
-  
 
+  
 //Delete user data from database if clicked on the delete button
 
 if (isset($_POST['delete_user_id'])) {
@@ -108,7 +108,7 @@ include "includes/admin_header.php";
  <!-- Dashboard navigation -->
  <div class="col-lg-3">
       <div class="list-group">
-        <a href="user.php" class="list-group-item list-group-item-action">Users</a>
+        <a href="user.php" class="list-group-item list-group-item-action active"  >Users</a>
         <a href="posts.php" class="list-group-item list-group-item-action">Posts</a>
         <a href="categories.php" class="list-group-item list-group-item-action">Categories</a>
         <a href="comments.php" class="list-group-item list-group-item-action">Comments</a>
