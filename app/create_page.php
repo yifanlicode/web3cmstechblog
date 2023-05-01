@@ -31,6 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $image = isset($_FILES['page_image']) ? $_FILES['page_image'] : null;
   $post_status = isset($_POST['post_status']) ? $_POST['post_status'] : '';
   $author = $_SESSION['username'];
+  
+  if (empty($title) || empty($content)) {
+    $_SESSION['message'] = "Title and content cannot be empty.";
+    header("Location: create_page.php");
+    exit;
+  }
 
 
   if (!empty($category_name)) {
@@ -52,8 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $statement->execute();
       $category_id = $db->lastInsertId();
     }
-  } else {
+  } else { // Category name not provided, use the category ID
     $category_id = filter_input(INPUT_POST, 'category_id', FILTER_SANITIZE_NUMBER_INT);
+    if (empty($category_id)) {
+      $category_id = 1; // Default category ID
+  }
   }
 
 
@@ -205,7 +214,7 @@ include('includes/header.php');
             <div class="form-group mb-3">
               <div class="input-group">
                 <input type="hidden" name="tag" id="hidden-tag-input">
-                <input type="text" class="form-control" id="tag-input" placeholder="Enter tags">
+                <input type="text" class="form-control" id="tag-input" placeholder="Enter tags and press Enter key to add">
               </div>
               <div id="tag-list" class="mt-2"></div>
             </div>
@@ -240,7 +249,7 @@ include('includes/header.php');
 
 
             <!-- Submit -->
-            <button type="submit" name="submit" id="submit" class="btn btn-primary">Create Post</button>
+            <button type="submit" name="submit" id="submit" class="btn btn-primary" onclick="return validateForm();">Create Post</button>
   </form>
 </div>
 </div>

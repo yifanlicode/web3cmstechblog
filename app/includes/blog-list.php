@@ -67,12 +67,13 @@ switch($sort){
 $statement = $db->prepare($query);
 $statement->execute();
 $blogs = $statement->fetchAll(PDO::FETCH_ASSOC);
+$statement->closeCursor();
 
 
 ?>
 
 
-
+<div id="blog-list-container">
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
   <?php foreach ($blogs as $blog) : ?>
     <div class="col">
@@ -105,23 +106,27 @@ $blogs = $statement->fetchAll(PDO::FETCH_ASSOC);
     
             <!-- display blog content -->
             <?php
-            $content = htmlspecialchars($blog['post_content']);
-            if (strlen($content) > 150) :
-              $truncated_content = substr($content, 0, 150) . "...";            
+            // display blog content
+            $content = $blog['post_content'];
+            $content = strip_tags($content); 
+            if (strlen($content) > 180) :
+              $truncated_content = substr($content, 0, 180) . "...";
             ?>
-              <div class="card-text text-muted"><?= $truncated_content ?></div>
+          <div class="card-text text-muted justified-text"><?= $truncated_content ?></div>
               <div class="text-end">
               <a href="full_page.php?id=<?= urlencode($blog['post_id']) ?>">
                   Read more >>
                 </a>
               </div>
             <?php else : ?>
-              <div class="card-text"><?= $content ?></div>
+              <div class="card-text justified-text"><?= $content ?></div>
             <?php endif ?>
+            
           </div>
         </div>
       </div>
     </div>
   <?php endforeach ?>
   <!-- End of Blog Post -->
+</div>
 </div>

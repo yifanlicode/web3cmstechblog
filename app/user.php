@@ -1,1 +1,0 @@
-<!--individual user page (for registered users)  -->

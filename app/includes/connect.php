@@ -6,7 +6,9 @@
 // const DB_PASS = 'admin';
 
 if (!defined('DB_HOST')) {
-  define('DB_HOST', 'mysql:host=localhost;dbname=web3techblog_db;charset=utf8');
+  define('DB_HOST', 
+  'mysql:host=localhost;
+  dbname=web3techblog_db;charset=utf8mb4');
 }
 
 if (!defined('DB_USER')) {

@@ -63,7 +63,7 @@ function login_user($username, $password)
       $_SESSION['user_role'] = $user['user_role'];
 
       if ($user['user_role'] === 'admin') {
-        $_SESSION['message'] = 'Welcome, admin!';
+        $_SESSION['message'] = 'Welcome, admin!' . $user['username'] . '!';
         header('Location: ../admin/index.php');
       } else {
         $_SESSION['message'] = 'Welcome, ' . $user['username'] . '!';
@@ -107,13 +107,9 @@ include 'includes/header.php';
             <?php echo $error; ?>
           </div>
         <?php endif; ?>
-
-
         <button type="submit" class="btn btn-primary">Login</button>
 
       </form>
-
-
     </div>
   </div>
 

@@ -13,8 +13,11 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
   session_start();
 }
 
+
 // Get the post ID and validate it
 $post_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+$comment_post_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
 if (empty($post_id)) {
   header("Location: index.php");
   exit;
@@ -49,47 +52,6 @@ if ($post) {
   header("Location: index.php");
   exit;
 }
-
-$comment_post_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-//echo "comment_post_id: $comment_post_id<br>";
-
-if (isset($_POST['submit'])) {
-  // Get the comment content
-  $content = filter_input(INPUT_POST, 'comment_content', FILTER_SANITIZE_STRING);
-  //echo "content: $content<br>";
-  $user_id = $_SESSION['user_id'];
-  //echo "user_id: $user_id<br>";
-
-    // Check if the entered captcha is correct
-    if ($_POST['captcha'] != $_SESSION['captcha']) {
-    // Captcha is incorrect
-    $error = "Captcha is incorrect, please try again.";
-     } else {
-    // Insert the comment into the database
-    $query = "INSERT INTO comments 
-              (comment_post_id, comment_user_id, comment_content, comment_status, comment_date)
-            VALUES 
-             (:post_id, :user_id, :content, 'pending', NOW())";
-
-    $query = "INSERT INTO comments (comment_post_id, comment_user_id, comment_content, comment_date)
-    VALUES (:post_id, :user_id, :content, NOW())";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':post_id', $comment_post_id);
-    $statement->bindValue(':user_id', $user_id);
-    $statement->bindValue(':content', $content);
-    $statement->execute();
-    $statement->closeCursor();
-    // echo "Comment submitted successfully<br>";
-  }
-}
-
-// Get the comments for the post from the database and display them on the page 
-$query = "SELECT * FROM comments INNER JOIN users ON comments.comment_user_id = users.user_id WHERE comments.comment_post_id = :id AND comments.comment_status = 'approved' ORDER BY comment_date DESC";
-  $statement = $db->prepare($query);
-  $statement->bindValue(':id', $post_id);
-  $statement->execute();
-  $comments = $statement->fetchAll();
-  $statement->closeCursor();
 
 
 include 'includes/header.php';

@@ -1,6 +1,21 @@
 <!-- 
   header file for all pages
 -->
+<?php
+  if (isset($_SESSION['message'])) {
+    echo '<div class="container mt-3"><div class="alert alert-success">' . $_SESSION['message'] . '</div></div>';
+    unset($_SESSION['message']);
+  }
+
+
+// Fetch all categories from the database
+require_once 'includes/connect.php';
+$category_query = "SELECT * FROM categories";
+$category_result = $db->query($category_query);
+$categories = $category_result->fetchAll(PDO::FETCH_ASSOC);
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +38,6 @@
   
   <!--   Custom CSS -->
   <link rel="stylesheet" href="../public/css/style.css">
-
 
   <!-- jQuery2023 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -52,7 +66,7 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="navbar-collapse collapse show" id="navbarColor01" style="">
+      <div class="navbar-collapse collapse show" id="navbarColor01">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
             <a class="nav-link active" href="index.php">Home
@@ -60,20 +74,16 @@
             </a>
           </li>
 
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="blog-list.php">Blog List</a>
-          </li> -->
-
           <li class="nav-item">
-            <a class="nav-link" href="category_page.php?cat_id=1">Tutorials</a>
+            <a class="nav-link" href="category_page.php?cat_id=15">Guides</a>
           </li>
 
           <li class="nav-item">
-          <a class="nav-link" href="category_page.php?cat_id=2">Hacthons</a>
+          <a class="nav-link" href="category_page.php?cat_id=5">Hacthons</a>
           </li>
 
           <li class="nav-item">
-          <a class="nav-link" href="category_page.php?cat_id=3">Jobs</a>
+          <a class="nav-link" href="category_page.php?cat_id=15">Tech</a>
           </li>
 
           <li class="nav-item">
@@ -87,22 +97,23 @@
         <!-- search bar -->
         <form action="search.php" method="GET" class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_query">
+      
         <select class="form-select me-2" aria-label="Category" name="category">
-              <option value="0">All Categories</option>
-              <option value="1">Tutorials</option>
-              <option value="2">Hacthons</option>
-              <option value="3">Jobs</option>
-            </select>
+        <option value="0">All Categories</option>
+        <?php foreach ($categories as $category) : ?>
+          <option value="<?= $category['cat_id'] ?>"><?= htmlspecialchars($category['cat_title']) ?></option>
+        <?php endforeach; ?>
+         </select>
+
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
         </form>
 
         <!-- login and logout -->
         <ul class="navbar-nav">
         
-
           <?php if (isset($_SESSION['user_id'])) : ?>
             <li class="nav-item">
-              <span class="nav-link">Welcome, <?php echo $_SESSION['username']; ?></span>
+              <span class="nav-link">Hi, <?php echo $_SESSION['username']; ?></span>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="logout.php">Logout</a>
@@ -118,11 +129,6 @@
   </nav>
 
 
-  <?php
-  if (isset($_SESSION['message'])) {
-    echo '<div class="container mt-3"><div class="alert alert-success">' . $_SESSION['message'] . '</div></div>';
-    unset($_SESSION['message']);
-  }
-  ?>
+  
 
   <!-- End of Header -->

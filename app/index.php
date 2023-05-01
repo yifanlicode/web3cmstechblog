@@ -45,9 +45,7 @@ include('includes/header.php');
 
 
       <!-- Include blog-list.php -->
-      <div id="blog-list-container">
         <?php include 'includes/blog-list.php'; ?>
-      </div>
     </div>
 
     <!-- Sidebar -->
@@ -55,7 +53,6 @@ include('includes/header.php');
     <!-- End of sidebar -->
 
   </div>
-</div>
 <!-- End of Main Content -->
 
 
