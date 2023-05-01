@@ -32,6 +32,8 @@ Web3 LaunchPad's CMS serves as a centralized platform for managing and sharing c
 |-------------|-------------|----------------|
 | cat_id      | int(3)      | AUTO_INCREMENT |
 | cat_title   | varchar(255)| NOT NULL       |
+| created_at  | TIMESTAMP   | NOT NULL       |
+| updated_at  | TIMESTAMP   | NOT NULL       |
 
 #### Comments Table
 
@@ -71,20 +73,4 @@ Web3 LaunchPad's CMS serves as a centralized platform for managing and sharing c
 | user_email     | varchar(255)| NOT NULL       |
 | user_password  | varchar(255)| NOT NULL       |
 | user_role      | varchar(255)| NOT NULL       |
-| user_firstname | varchar(255)| NOT NULL       |
-| user_lastname  | varchar(255)| NOT NULL       |
-| user_image     | text        | NOT NULL       |
-| randSalt       | varchar(255)| NOT NULL       |
-| token          | text        | NOT NULL       |
 | created_at     | timestamp   | NOT NULL       |
-
-#### Users_online Table
-
-| Field       | Type         | Extra          |
-|-------------|--------------|----------------|
-| id          | int(11)      | AUTO_INCREMENT |
-| session     | varchar(255) | NOT NULL       |
-| time        | int(11)      | NOT NULL       |
-| user_id     | int(11)      | DEFAULT NULL   |
-| ip_address  | varchar(255) | NOT NULL DEFAULT '' |
-| user_agent  | text         | NOT NULL       |
