@@ -1,10 +1,6 @@
-// function sortPosts(value) {
-//   let currentUrl = new URL(window.location.href);
-//   currentUrl.searchParams.set('sort', value);
-//   window.location.href = currentUrl.toString();
-// }
 
 
+// sort posts by date or title in the blog page
 function sortPosts(sortType) {
   const encodedSortType = encodeURIComponent(sortType);
   const xhr = new XMLHttpRequest();

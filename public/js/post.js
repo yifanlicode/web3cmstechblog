@@ -22,7 +22,7 @@ addCategoryBtn.addEventListener('click', function() {
   // Alternatively, you can submit the form using JavaScript to add the new category
   // and display a success message to the user without reloading the page
   // Example AJAX request using jQuery:
-  // $.post('add_categories.php', { title: categoryTitle })
+  // $.post('add_category_page.php', { title: categoryTitle })
   //   .done(function(response) {
   //     location.reload();
   //   })

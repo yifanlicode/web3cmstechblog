@@ -1,0 +1,12 @@
+.cover-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+
+.justified-text {
+  text-align: justify !important;
+}
+
+
+
